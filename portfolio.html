@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Sir Builder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --white: #f4f0e8;
+      --cream: #e8e2d4;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --grey: #2a2a2a;
+      --muted: #888;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-serif: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,168,76,0.5);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.15s ease;
+    }
+    body:has(a:hover) .cursor, body:has(button:hover) .cursor {
+      width: 18px; height: 18px;
+      background: var(--gold-light);
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.35;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      mix-blend-mode: normal;
+      background: rgba(8,8,8,0.95);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 3px;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--black);
+      padding: 10px 24px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-decoration: none;
+      font-family: var(--font-body);
+      transition: background 0.3s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* ── PORTFOLIO ── */
+    .portfolio-section { padding: 160px 48px 120px; min-height: 100vh; }
+    .portfolio-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 72px;
+    }
+    .section-tag {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 6vw, 80px);
+      line-height: 1;
+      letter-spacing: 1px;
+      max-width: 700px;
+    }
+    .section-title em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--gold);
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .portfolio-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--grey);
+      cursor: pointer;
+    }
+    .portfolio-card-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px;
+      background: linear-gradient(to top, rgba(8,8,8,0.9) 0%, transparent 60%);
+      position: relative;
+      z-index: 1;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.6s ease;
+    }
+    .portfolio-card:hover .portfolio-card-inner {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .portfolio-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.6s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 120px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 4px;
+    }
+    .portfolio-card:hover .portfolio-bg { transform: scale(1.05); }
+    .p-card-1 .portfolio-bg { background: linear-gradient(135deg, #2a1f0e, #1a1208); }
+    .p-card-2 .portfolio-bg { background: linear-gradient(135deg, #0a1628, #1a4a8a); }
+    .p-card-3 .portfolio-bg { background: linear-gradient(135deg, #1a3320, #2d6a40); }
+    .p-card-4 .portfolio-bg { background: linear-gradient(135deg, #b5605a, #f0d5cc); }
+    .p-card-5 .portfolio-bg { background: linear-gradient(135deg, #f5d20a, #1a1a1a); }
+    .p-card-6 .portfolio-bg { background: linear-gradient(135deg, #c4a882, #0d0d0d); }
+    .p-card-7 .portfolio-bg { background: linear-gradient(135deg, #d4722a, #1a1508); }
+    .p-card-8 .portfolio-bg { background: linear-gradient(135deg, #00f5a0, #080b12); }
+    .p-card-9 .portfolio-bg { background: linear-gradient(135deg, #7c3aed, #06040f); }
+    .p-card-10 .portfolio-bg { background: linear-gradient(135deg, #C4684A, #2C1A0E); }
+    .p-card-11 .portfolio-bg { background: linear-gradient(135deg, #0066FF, #0A1628); }
+    .p-card-12 .portfolio-bg { background: linear-gradient(135deg, #a3e635, #1a1a1a); }
+    .p-card-13 .portfolio-bg { background: linear-gradient(135deg, #5b3fc8, #1a1208); }
+    .p-card-14 .portfolio-bg { background: linear-gradient(135deg, #06b6d4, #0a0f1a); }
+    .p-card-15 .portfolio-bg { background: linear-gradient(135deg, #c0274a, #12080a); }
+    .portfolio-tag {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .portfolio-name {
+      font-family: var(--font-serif);
+      font-size: 22px;
+    }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(201,168,76,0);
+      transition: background 0.4s;
+      z-index: 0;
+    }
+    .portfolio-card:hover .portfolio-overlay {
+      background: rgba(201,168,76,0.05);
+    }
+    .btn-ghost {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s;
+    }
+    .btn-ghost:hover { color: var(--white); }
+    .btn-ghost::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: currentColor;
+      transition: width 0.3s;
+    }
+    .btn-ghost:hover::before { width: 48px; }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--black);
+      padding: 16px 40px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-decoration: none;
+      font-family: var(--font-body);
+      display: inline-block;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      border: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 48px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer .nav-logo { font-size: 18px; }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .portfolio-section { padding: 120px 24px 80px; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .portfolio-card-inner { transform: translateY(0); opacity: 1; }
+      .portfolio-header { flex-direction: column; gap: 24px; align-items: flex-start; }
+      footer { flex-direction: column; gap: 20px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index (1).html" class="nav-logo">Sir<span>.</span>Build</a>
+    <ul class="nav-links">
+      <li><a href="index (1).html#services">Services</a></li>
+      <li><a href="index (1).html#process">Process</a></li>
+      <li><a href="index (1).html#contact">Contact</a></li>
+    </ul>
+    <a href="index (1).html#contact" class="nav-cta">Hire Me</a>
+  </nav>
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio-section">
+    <div class="portfolio-header">
+      <div>
+        <p class="section-tag reveal">Selected Work</p>
+        <h2 class="section-title reveal">What I've<br><em>Built.</em></h2>
+      </div>
+      <a href="index (1).html#contact" class="btn-ghost reveal">Start Your Project</a>
+    </div>
+
+    <div class="portfolio-grid">
+      <a href="https://01-restaurant.netlify.app" class="portfolio-card p-card-1 reveal" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">CAFÉ</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Food & Hospitality</div>
+          <div class="portfolio-name">Amazi Café — Restaurant Landing</div>
+        </div>
+      </a>
+      <a href="https://02-clinic.netlify.app" class="portfolio-card p-card-2 reveal reveal-delay-1" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">CLINIC</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Healthcare</div>
+          <div class="portfolio-name">MediCare Clinic — Medical Landing</div>
+        </div>
+      </a>
+      <a href="https://03-realestate.netlify.app" class="portfolio-card p-card-3 reveal reveal-delay-2" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">ESTATE</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Real Estate</div>
+          <div class="portfolio-name">Prime Properties — Property Listing</div>
+        </div>
+      </a>
+      <a href="https://05-wedding.netlify.app" class="portfolio-card p-card-4 reveal" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">WEDDING</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Wedding & Events</div>
+          <div class="portfolio-name">Eternal Moments — Wedding Planner</div>
+        </div>
+      </a>
+      <a href="https://06-gym.netlify.app" class="portfolio-card p-card-5 reveal reveal-delay-1" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">FITNESS</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Fitness & Health</div>
+          <div class="portfolio-name">APEX Gym — Performance Training</div>
+        </div>
+      </a>
+      <a href="https://07-photography.netlify.app" class="portfolio-card p-card-6 reveal reveal-delay-2" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">STUDIO</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Photography & Video</div>
+          <div class="portfolio-name">Lumière Studio — Professional Shoots</div>
+        </div>
+      </a>
+      <a href="https://14-catering.netlify.app" class="portfolio-card p-card-7 reveal" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">CATERING</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Food & Event Catering</div>
+          <div class="portfolio-name">Saveur Catering — Professional Events</div>
+        </div>
+      </a>
+      <a href="https://01-bootcamp.netlify.app" class="portfolio-card p-card-8 reveal reveal-delay-1" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">CODE</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Education & Tech</div>
+          <div class="portfolio-name">CodeForge Bootcamp — Tech Career Launch</div>
+        </div>
+      </a>
+      <a href="https://02-mobileapp.netlify.app" class="portfolio-card p-card-9 reveal reveal-delay-2" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">VELO</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Mobile Application</div>
+          <div class="portfolio-name">Velo App — Smart Urban Mobility</div>
+        </div>
+      </a>
+      <a href="https://landing-hotel1.netlify.app" class="portfolio-card p-card-10 reveal" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">HOTEL</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Hospitality & Travel</div>
+          <div class="portfolio-name">Villa Serena — Boutique Hotel</div>
+        </div>
+      </a>
+      <a href="https://accounting-landing.netlify.app" class="portfolio-card p-card-11 reveal reveal-delay-1" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">APEX</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Finance & Business</div>
+          <div class="portfolio-name">Apex Accounting — Financial Advisory</div>
+        </div>
+      </a>
+      <a href="https://17-personaltrainer.netlify.app" class="portfolio-card p-card-12 reveal reveal-delay-2" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">TRAIN</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Fitness & Health</div>
+          <div class="portfolio-name">Coach Theo — Personal Trainer</div>
+        </div>
+      </a>
+      <a href="https://18-languageschool.netlify.app" class="portfolio-card p-card-13 reveal" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">TALK</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Education</div>
+          <div class="portfolio-name">LinguaKigali — Language School</div>
+        </div>
+      </a>
+      <a href="https://19-itsupport.netlify.app" class="portfolio-card p-card-14 reveal reveal-delay-1" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">TECH</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Tech & IT Support</div>
+          <div class="portfolio-name">NetCore IT — Tech Solutions</div>
+        </div>
+      </a>
+      <a href="https://20-eventorganizer.netlify.app" class="portfolio-card p-card-15 reveal reveal-delay-2" style="text-decoration: none;" target="_blank">
+        <div class="portfolio-bg">EVENT</div>
+        <div class="portfolio-overlay"></div>
+        <div class="portfolio-card-inner">
+          <div class="portfolio-tag">Events & Planning</div>
+          <div class="portfolio-name">Vivid Events — Event Organizer</div>
+        </div>
+      </a>
+    </div>
+
+    <div style="margin-top: 80px; text-align: center;">
+        <a href="index (1).html#contact" class="btn-primary"><span>Let's Start Your Project</span></a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="index (1).html" class="nav-logo">Sir<span>.</span>Builder</a>
+    <p class="footer-copy">© 2025 Sir Developer. Kigali, Rwanda.</p>
+    <ul class="footer-links">
+      <li><a href="index (1).html#services">Services</a></li>
+      <li><a href="index (1).html#contact">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
