@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Saveur Catering — Kigali Events</title>
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Questrial&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#faf8f3;--dark:#1a1508;--orange:#d4722a;--cream:#f0e8d0;--muted:#7a7060;--font-h:'Yeseva One',serif;--font-b:'Questrial',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:var(--font-b);overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;transition:all 0.4s}
+nav.scrolled{background:rgba(250,248,243,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(26,21,8,0.07)}
+.logo{font-family:var(--font-h);font-size:22px;color:var(--dark);text-decoration:none}
+.logo span{color:var(--orange)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:13px;transition:color 0.3s}
+.nav-links a:hover{color:var(--dark)}
+.nav-btn{background:var(--orange);color:#fff;padding:10px 26px;font-size:12px;font-weight:400;text-decoration:none;font-family:var(--font-b);transition:all 0.3s}
+.nav-btn:hover{background:#b85e22}
+
+.hero{min-height:100vh;background:var(--dark);display:grid;grid-template-columns:1fr 1fr;overflow:hidden;position:relative}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(212,114,42,0.1),transparent 60%);pointer-events:none}
+.hero-left{padding:160px 64px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.h-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:rgba(212,114,42,0.7);margin-bottom:24px}
+.h-title{font-family:var(--font-h);font-size:clamp(48px,6vw,76px);line-height:1.05;color:#fff;margin-bottom:24px}
+.h-title em{color:var(--orange);font-style:normal}
+.h-desc{font-size:15px;line-height:1.9;color:rgba(255,255,255,0.5);max-width:400px;margin-bottom:48px}
+.h-actions{display:flex;gap:16px}
+.btn-org{background:var(--orange);color:#fff;padding:16px 36px;font-size:12px;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;display:inline-block}
+.btn-org:hover{background:#b85e22}
+.btn-gw{border:1px solid rgba(255,255,255,0.2);color:#fff;padding:16px 36px;font-size:12px;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;display:inline-block}
+.btn-gw:hover{border-color:rgba(255,255,255,0.5)}
+.hero-right{position:relative;z-index:2;display:grid;grid-template-rows:2fr 1fr;gap:2px}
+.h-img{background:linear-gradient(160deg,#2a1e0a,#1a1208);display:flex;align-items:center;justify-content:center;font-size:100px}
+.h-img-sm{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.h-img-sm div{background:linear-gradient(160deg,#1a1208,#0d0a04);display:flex;align-items:center;justify-content:center;font-size:56px}
+
+.strip{background:var(--orange);padding:16px 0;overflow:hidden;white-space:nowrap}
+.strip-inner{display:inline-flex;gap:48px;animation:scroll 18s linear infinite}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.strip-item{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#fff;flex-shrink:0;font-family:var(--font-b)}
+.strip-dot{color:rgba(255,255,255,0.4)}
+
+.menu-section{padding:100px 48px;background:var(--bg)}
+.s-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+.s-title{font-family:var(--font-h);font-size:clamp(40px,5vw,60px);line-height:1.05;margin-bottom:64px}
+.s-title em{color:var(--orange);font-style:normal}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.menu-card{background:#fff;overflow:hidden;border-bottom:3px solid transparent;transition:all 0.3s}
+.menu-card:hover{border-color:var(--orange);box-shadow:0 16px 48px rgba(26,21,8,0.08)}
+.menu-img{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:72px}
+.m-c1{background:linear-gradient(135deg,#f0e0c8,#e0caa8)}
+.m-c2{background:linear-gradient(135deg,#e8d0c0,#d8bca4)}
+.m-c3{background:linear-gradient(135deg,#d8e8d0,#c4d8b8)}
+.menu-info{padding:24px}
+.menu-cat{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.menu-name{font-family:var(--font-h);font-size:20px;margin-bottom:10px}
+.menu-desc{font-size:13px;line-height:1.7;color:var(--muted)}
+
+.packages{padding:80px 48px 100px;background:var(--cream)}
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(26,21,8,0.08);margin-top:64px}
+.pkg{background:var(--cream);padding:48px 36px}
+.pkg.featured{background:var(--dark)}
+.pkg-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.pkg.featured .pkg-label{color:rgba(255,255,255,0.4)}
+.pkg-name{font-family:var(--font-h);font-size:28px;margin-bottom:8px}
+.pkg.featured .pkg-name{color:#fff}
+.pkg-guests{font-size:12px;color:var(--muted);margin-bottom:32px}
+.pkg.featured .pkg-guests{color:rgba(255,255,255,0.4)}
+.pkg-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:40px}
+.pkg-features li{font-size:13px;color:var(--muted);display:flex;gap:10px}
+.pkg.featured .pkg-features li{color:rgba(255,255,255,0.6)}
+.pkg-features li::before{content:'✓';color:var(--orange);flex-shrink:0}
+.pkg-cta{display:block;text-align:center;padding:14px;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;font-family:var(--font-b);transition:all 0.3s}
+.pkg-outline{border:1px solid rgba(26,21,8,0.2);color:var(--dark)}
+.pkg-outline:hover{background:var(--dark);color:#fff;border-color:var(--dark)}
+.pkg-fill{background:var(--orange);color:#fff}
+.pkg-fill:hover{background:#b85e22}
+
+.cta{padding:100px 48px;background:var(--dark);text-align:center;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(212,114,42,0.1),transparent 60%)}
+.cta-title{font-family:var(--font-h);font-size:clamp(48px,7vw,80px);color:#fff;line-height:1;margin:16px 0 40px;position:relative}
+.cta-title em{color:var(--orange);font-style:normal}
+
+footer{padding:32px 48px;background:#0d0b04;display:flex;align-items:center;justify-content:space-between}
+.fl{font-family:var(--font-h);font-size:18px;color:#fff;text-decoration:none}.fl span{color:var(--orange)}
+.fc{font-size:12px;color:rgba(255,255,255,0.25)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s,transform 0.8s}.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media(max-width:900px){nav{padding:16px 24px}.nav-links{display:none}.hero{grid-template-columns:1fr;min-height:auto}.hero-left{padding:120px 24px 48px}.hero-right{height:260px}.menu-section,.packages{padding:80px 24px}.menu-grid,.pkg-grid{grid-template-columns:1fr}.cta{padding:80px 24px}footer{flex-direction:column;gap:16px;padding:24px;text-align:center}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="#" class="logo">Saveur<span>.</span></a>
+  <ul class="nav-links"><li><a href="#menu">Menus</a></li><li><a href="#packages">Packages</a></li><li><a href="#cta">Quote</a></li></ul>
+  <a href="#cta" class="nav-btn">Get a Quote</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <p class="h-tag">Event Catering · Kigali, Rwanda</p>
+    <h1 class="h-title">Great Food Makes<br><em>Great</em> Events.</h1>
+    <p class="h-desc">Professional catering for weddings, corporate events, private parties, and everything in between. Fresh, delicious, unforgettable.</p>
+    <div class="h-actions"><a href="#packages" class="btn-org">View Packages</a><a href="#cta" class="btn-gw">Get a Quote</a></div>
+  </div>
+  <div class="hero-right">
+    <div class="h-img">🍽️</div>
+    <div class="h-img-sm"><div>🥘</div><div>🎂</div></div>
+  </div>
+</section>
+
+<div class="strip"><div class="strip-inner">
+  <span class="strip-item">Wedding Catering</span><span class="strip-dot">◆</span>
+  <span class="strip-item">Corporate Events</span><span class="strip-dot">◆</span>
+  <span class="strip-item">Birthday Parties</span><span class="strip-dot">◆</span>
+  <span class="strip-item">Cocktail Receptions</span><span class="strip-dot">◆</span>
+  <span class="strip-item">Buffet Service</span><span class="strip-dot">◆</span>
+  <span class="strip-item">Private Dining</span><span class="strip-dot">◆</span>
+  <span class="strip-item">Wedding Catering</span><span class="strip-dot">◆</span>
+  <span class="strip-item">Corporate Events</span><span class="strip-dot">◆</span>
+  <span class="strip-item">Birthday Parties</span><span class="strip-dot">◆</span>
+  <span class="strip-item">Cocktail Receptions</span><span class="strip-dot">◆</span>
+</div></div>
+
+<section class="menu-section" id="menu">
+  <p class="s-tag reveal">Our Cuisine</p>
+  <h2 class="s-title reveal">Menus Crafted with <em>Passion</em></h2>
+  <div class="menu-grid">
+    <div class="menu-card reveal"><div class="menu-img m-c1">🥘</div><div class="menu-info"><div class="menu-cat">Traditional</div><div class="menu-name">Rwandan Feast</div><p class="menu-desc">Isombe, ibirayi, ibiharage, brochettes, ugali, and seasonal vegetables — a true taste of Rwanda.</p></div></div>
+    <div class="menu-card reveal d1"><div class="menu-img m-c2">🍗</div><div class="menu-info"><div class="menu-cat">Continental</div><div class="menu-name">International Buffet</div><p class="menu-desc">Grilled meats, pasta, salads, risottos, and desserts curated from world cuisines for cosmopolitan crowds.</p></div></div>
+    <div class="menu-card reveal d2"><div class="menu-img m-c3">🥗</div><div class="menu-info"><div class="menu-cat">Healthy</div><div class="menu-name">Garden Fresh Menu</div><p class="menu-desc">Vegetarian and vegan options, fresh salads, grain bowls, and clean-eating dishes for health-conscious guests.</p></div></div>
+  </div>
+</section>
+
+<section class="packages" id="packages">
+  <p class="s-tag reveal">Event Packages</p>
+  <h2 class="s-title reveal">Choose Your <em>Package</em></h2>
+  <div class="pkg-grid">
+    <div class="pkg reveal">
+      <div class="pkg-label">Small Events</div>
+      <div class="pkg-name">Petit</div>
+      <div class="pkg-guests">Up to 50 guests</div>
+      <ul class="pkg-features"><li>2-course buffet menu</li><li>Setup & breakdown</li><li>Serving staff (2)</li><li>Basic tableware</li></ul>
+      <a href="#cta" class="pkg-cta pkg-outline">Get Quote</a>
+    </div>
+    <div class="pkg featured reveal d1">
+      <div class="pkg-label">Most Popular</div>
+      <div class="pkg-name">Grand</div>
+      <div class="pkg-guests">50–200 guests</div>
+      <ul class="pkg-features"><li>3-course full service</li><li>Chef on-site</li><li>Serving staff (5)</li><li>Premium tableware</li><li>Cocktail hour included</li></ul>
+      <a href="#cta" class="pkg-cta pkg-fill">Get Quote</a>
+    </div>
+    <div class="pkg reveal d2">
+      <div class="pkg-label">Luxury Events</div>
+      <div class="pkg-name">Prestige</div>
+      <div class="pkg-guests">200+ guests</div>
+      <ul class="pkg-features"><li>Custom menu design</li><li>Executive chef team</li><li>Full event staffing</li><li>Décor coordination</li><li>Live cooking stations</li></ul>
+      <a href="#cta" class="pkg-cta pkg-outline">Get Quote</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <p class="s-tag reveal" style="color:rgba(212,114,42,0.7);text-align:center">Free Quote</p>
+  <h2 class="cta-title reveal">Let's plan your<br><em>perfect</em> menu.</h2>
+  <p style="color:rgba(255,255,255,0.4);font-size:15px;max-width:420px;margin:0 auto 48px;line-height:1.8;position:relative" class="reveal">Tell us your event date, guest count, and budget — we'll send a custom quote within 24 hours.</p>
+  <a href="https://wa.me/250700000000" class="btn-org reveal" style="position:relative">WhatsApp for a Quote 🍽️</a>
+</section>
+
+<footer>
+  <a href="#" class="fl">Saveur<span>.</span></a>
+  <p class="fc">© 2025 Saveur Catering · Kigali, Rwanda</p>
+  <a href="https://14-catering.netlify.app" target="_blank" style="color: var(--orange); text-decoration: none; font-size: 12px; font-weight: 700;">Live Demo ↗</a>
+</footer>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60))
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('on')),{threshold:0.1})
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>

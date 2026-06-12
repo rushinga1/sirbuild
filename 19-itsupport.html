@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NetCore IT — Tech Support & Solutions Kigali</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f8fafb;--dark:#0a0f1a;--cyan:#06b6d4;--blue:#0284c7;--light:#e0f2fe;--muted:#5a7080;--font:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:var(--font);font-weight:300;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;background:rgba(248,250,251,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(10,15,26,0.08);display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:18px;font-weight:700;color:var(--dark);text-decoration:none;font-family:var(--mono)}
+.logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:13px;transition:color 0.3s}
+.nav-links a:hover{color:var(--dark)}
+.nav-btn{background:var(--cyan);color:#fff;padding:10px 22px;font-size:12px;font-weight:700;text-decoration:none;transition:all 0.3s}
+.nav-btn:hover{background:var(--blue)}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--dark);display:grid;grid-template-columns:1fr 1fr;overflow:hidden;position:relative}
+.hero::before{content:'';position:absolute;top:0;right:0;width:55%;height:100%;background:linear-gradient(135deg,#051222,#0a1f38);clip-path:polygon(8% 0,100% 0,100% 100%,0 100%)}
+.hero-left{padding:150px 64px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.status-bar{display:flex;align-items:center;gap:8px;margin-bottom:32px;font-family:var(--mono);font-size:11px;color:rgba(6,182,212,0.7)}
+.status-dot{width:7px;height:7px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.h-title{font-size:clamp(44px,5.5vw,68px);font-weight:700;line-height:1.05;color:#fff;margin-bottom:24px}
+.h-title span{color:var(--cyan)}
+.h-desc{font-size:15px;line-height:1.9;color:rgba(255,255,255,0.5);max-width:440px;margin-bottom:48px}
+.h-actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn-cyan{background:var(--cyan);color:#fff;padding:16px 36px;font-size:12px;font-weight:700;text-decoration:none;transition:all 0.3s;display:inline-block}
+.btn-cyan:hover{background:var(--blue)}
+.btn-ghost{border:1px solid rgba(255,255,255,0.15);color:#fff;padding:16px 36px;font-size:12px;text-decoration:none;transition:all 0.3s;display:inline-block}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.4)}
+
+.hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:150px 48px 80px 20px}
+.terminal{width:100%;max-width:380px;background:#0d1117;border:1px solid rgba(6,182,212,0.2);font-family:var(--mono)}
+.terminal-bar{background:#161b22;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(6,182,212,0.1)}
+.t-dot{width:10px;height:10px;border-radius:50%}
+.t-red{background:#ff5f57}.t-yellow{background:#febc2e}.t-green{background:#28c840}
+.t-title{font-size:11px;color:rgba(255,255,255,0.3);margin-left:auto}
+.terminal-body{padding:20px;display:flex;flex-direction:column;gap:8px}
+.t-line{font-size:12px;line-height:1.6}
+.t-prompt{color:var(--cyan)}
+.t-cmd{color:#f8f8f2}
+.t-output{color:rgba(255,255,255,0.4)}
+.t-success{color:#4ade80}
+.t-warn{color:#fbbf24}
+.t-cursor{display:inline-block;width:8px;height:14px;background:var(--cyan);animation:blink 1s step-end infinite;vertical-align:middle}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* STATS */
+.stats{background:#fff;display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(10,15,26,0.07)}
+.stat{padding:40px 28px;border-right:1px solid rgba(10,15,26,0.07);text-align:center}
+.stat:last-child{border-right:none}
+.stat-n{font-size:44px;font-weight:700;color:var(--cyan);line-height:1;font-family:var(--mono)}
+.stat-l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+/* SERVICES */
+.services{padding:100px 48px;background:var(--bg)}
+.s-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px}
+.s-title{font-size:clamp(36px,4.5vw,52px);font-weight:700;line-height:1.1;margin-bottom:64px}
+.s-title span{color:var(--cyan)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.svc-card{background:#fff;padding:36px;border:1px solid rgba(10,15,26,0.07);transition:all 0.3s;position:relative;overflow:hidden}
+.svc-card::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cyan);transform:scaleY(0);transition:transform 0.4s}
+.svc-card:hover::after{transform:scaleY(1)}
+.svc-card:hover{border-color:rgba(6,182,212,0.3);box-shadow:0 8px 32px rgba(6,182,212,0.08)}
+.svc-icon{font-size:32px;margin-bottom:16px}
+.svc-name{font-size:18px;font-weight:700;margin-bottom:10px}
+.svc-desc{font-size:13px;line-height:1.8;color:var(--muted)}
+
+/* SLA */
+.sla{padding:80px 48px 100px;background:var(--light)}
+.sla-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px}
+.sla-card{background:#fff;padding:36px;border-left:3px solid var(--cyan)}
+.sla-name{font-size:18px;font-weight:700;margin-bottom:8px}
+.sla-time{font-family:var(--mono);font-size:28px;color:var(--cyan);font-weight:700;margin-bottom:16px}
+.sla-desc{font-size:13px;line-height:1.8;color:var(--muted)}
+
+/* CTA */
+.cta{padding:100px 48px;background:var(--dark);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;top:50%;right:-100px;transform:translateY(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(6,182,212,0.1),transparent 60%);pointer-events:none}
+.cta-title{font-size:clamp(36px,4.5vw,52px);font-weight:700;color:#fff;line-height:1.1;position:relative}
+.cta-title span{color:var(--cyan)}
+.cta-desc{font-size:14px;line-height:1.9;color:rgba(255,255,255,0.4);margin-top:16px;position:relative}
+.cta-form{display:flex;flex-direction:column;gap:16px;position:relative}
+.c-in{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:#fff;padding:14px 18px;font-family:var(--font);font-size:14px;outline:none;transition:border-color 0.3s}
+.c-in:focus{border-color:rgba(6,182,212,0.5)}
+.c-in::placeholder{color:rgba(255,255,255,0.25)}
+.c-in option{background:#0a0f1a}
+.c-btn{background:var(--cyan);color:#fff;padding:16px;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:var(--font);transition:background 0.3s}
+.c-btn:hover{background:var(--blue)}
+
+footer{padding:32px 48px;background:#050810;display:flex;align-items:center;justify-content:space-between}
+.fl{font-size:16px;font-weight:700;color:#fff;text-decoration:none;font-family:var(--mono)}.fl span{color:var(--cyan)}
+.fc{font-size:12px;color:rgba(255,255,255,0.25)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s,transform 0.8s}.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media(max-width:900px){nav{padding:14px 20px}.nav-links{display:none}.hero{grid-template-columns:1fr;min-height:auto}.hero-left{padding:120px 24px 48px}.hero-right{padding:24px 24px 60px;justify-content:center}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:none}.services,.sla{padding:80px 24px}.svc-grid,.sla-grid{grid-template-columns:1fr}.cta{grid-template-columns:1fr;padding:80px 24px;gap:48px}footer{flex-direction:column;gap:16px;padding:24px;text-align:center}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="logo">Net<span>Core</span>.it</a>
+  <ul class="nav-links"><li><a href="#services">Services</a></li><li><a href="#sla">SLA</a></li><li><a href="#cta">Contact</a></li></ul>
+  <a href="#cta" class="nav-btn">Get Support</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="status-bar"><span class="status-dot"></span><span>All systems operational · Response time: &lt; 2hrs</span></div>
+    <h1 class="h-title">Your IT Problems<br><span>Solved Fast.</span></h1>
+    <p class="h-desc">Managed IT services, cybersecurity, network setup, and 24/7 technical support for businesses in Kigali. We keep your systems running.</p>
+    <div class="h-actions">
+      <a href="#cta" class="btn-cyan">Get IT Support</a>
+      <a href="#services" class="btn-ghost">Our Services</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="terminal">
+      <div class="terminal-bar"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span><span class="t-title">netcore-support ~ bash</span></div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">→ </span><span class="t-cmd">system_check --all</span></div>
+        <div class="t-line"><span class="t-output">Scanning network infrastructure...</span></div>
+        <div class="t-line"><span class="t-success">✓ Firewall: Active</span></div>
+        <div class="t-line"><span class="t-success">✓ Backup: Last run 2h ago</span></div>
+        <div class="t-line"><span class="t-success">✓ Servers: 99.9% uptime</span></div>
+        <div class="t-line"><span class="t-warn">⚠ Software update available</span></div>
+        <div class="t-line"><span class="t-prompt">→ </span><span class="t-cmd">deploy_patch --silent</span></div>
+        <div class="t-line"><span class="t-success">✓ Patch applied successfully</span></div>
+        <div class="t-line"><span class="t-output">All systems nominal.</span></div>
+        <div class="t-line"><span class="t-prompt">→ </span><span class="t-cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat reveal"><div class="stat-n">&lt;2hr</div><div class="stat-l">Response Time</div></div>
+  <div class="stat reveal d1"><div class="stat-n">99.9%</div><div class="stat-l">Uptime SLA</div></div>
+  <div class="stat reveal d2"><div class="stat-n">150+</div><div class="stat-l">Business Clients</div></div>
+  <div class="stat reveal d3"><div class="stat-n">24/7</div><div class="stat-l">Support Coverage</div></div>
+</div>
+
+<section class="services" id="services">
+  <p class="s-tag reveal">What We Do</p>
+  <h2 class="s-title reveal">IT Services <span>Built for Business</span></h2>
+  <div class="svc-grid">
+    <div class="svc-card reveal"><div class="svc-icon">🖥️</div><div class="svc-name">Managed IT Services</div><p class="svc-desc">Full outsourced IT management — we monitor, maintain, and support your entire technology infrastructure.</p></div>
+    <div class="svc-card reveal d1"><div class="svc-icon">🔒</div><div class="svc-name">Cybersecurity</div><p class="svc-desc">Firewall setup, antivirus, penetration testing, data encryption, and security awareness training for staff.</p></div>
+    <div class="svc-card reveal d2"><div class="svc-icon">🌐</div><div class="svc-name">Network & Infrastructure</div><p class="svc-desc">Office network setup, WiFi installation, server configuration, VPN, and cabling for new or existing offices.</p></div>
+    <div class="svc-card reveal"><div class="svc-icon">☁️</div><div class="svc-name">Cloud Solutions</div><p class="svc-desc">Microsoft 365, Google Workspace, cloud backup, and migration from on-premise systems to cloud platforms.</p></div>
+    <div class="svc-card reveal d1"><div class="svc-icon">🛠️</div><div class="svc-name">Hardware Support</div><p class="svc-desc">Laptop and desktop repairs, printer setup, hardware procurement, and asset management for your team.</p></div>
+    <div class="svc-card reveal d2"><div class="svc-icon">💾</div><div class="svc-name">Backup & Recovery</div><p class="svc-desc">Automated daily backups, disaster recovery planning, and rapid data restoration when things go wrong.</p></div>
+  </div>
+</section>
+
+<section class="sla" id="sla">
+  <p class="s-tag reveal">Response Times</p>
+  <h2 class="s-title reveal">Our <span>SLA Guarantees</span></h2>
+  <div class="sla-grid">
+    <div class="sla-card reveal"><div class="sla-name">Critical Issues</div><div class="sla-time">&lt; 1 hour</div><p class="sla-desc">Server down, total outage, security breach. We respond within 1 hour, 24/7, including weekends and holidays.</p></div>
+    <div class="sla-card reveal d1"><div class="sla-name">High Priority</div><div class="sla-time">&lt; 4 hours</div><p class="sla-desc">Major functionality impacted but partial workaround available. Response guaranteed within business hours.</p></div>
+    <div class="sla-card reveal d2"><div class="sla-name">Standard Requests</div><div class="sla-time">&lt; 24 hours</div><p class="sla-desc">New user setup, software installation, general tech questions. Handled efficiently within the next business day.</p></div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <div>
+    <h2 class="cta-title reveal">Stop letting IT<br>issues slow you <span>down.</span></h2>
+    <p class="cta-desc reveal">Get a free IT audit and find out exactly what's vulnerable in your business technology — at no cost.</p>
+  </div>
+  <div class="cta-form reveal d1">
+    <input class="c-in" type="text" placeholder="Company Name"/>
+    <input class="c-in" type="tel" placeholder="Phone Number"/>
+    <select class="c-in" style="cursor:pointer"><option>Company Size</option><option>1–10 employees</option><option>10–50 employees</option><option>50–200 employees</option><option>200+ employees</option></select>
+    <select class="c-in" style="cursor:pointer"><option>Service Needed</option><option>Managed IT Services</option><option>Cybersecurity</option><option>Network Setup</option><option>Cloud Solutions</option><option>Emergency Support</option></select>
+    <button class="c-btn" onclick="this.textContent='✓ Request Received!'">Request Free IT Audit</button>
+  </div>
+</section>
+
+<footer>
+  <a href="#" class="fl">Net<span>Core</span>.it</a>
+  <p class="fc">© 2025 NetCore IT Solutions · Kigali, Rwanda</p>
+  <a href="https://19-itsupport.netlify.app" target="_blank" style="color: var(--cyan); text-decoration: none; font-size: 12px; font-weight: 700;">Live Demo ↗</a>
+</footer>
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('on')),{threshold:0.1})
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>

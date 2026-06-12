@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Villa Serena | Boutique Hotel & Guest House</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --sand: #F5EFE0;
+    --warm-white: #FDFAF4;
+    --terracotta: #C4684A;
+    --terracotta-light: #D98B6F;
+    --deep-brown: #2C1A0E;
+    --mid-brown: #7A4F35;
+    --gold: #B89B5E;
+    --gold-light: #D4BC8A;
+    --text: #2C1A0E;
+    --muted: #8B7355;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--warm-white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(253,250,244,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(184,155,94,0.2);
+    transition: all 0.4s ease;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 300; letter-spacing: 0.15em;
+    color: var(--deep-brown);
+  }
+  .nav-logo span { color: var(--terracotta); font-style: italic; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mid-brown); text-decoration: none; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--terracotta); }
+  .nav-cta {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    background: var(--terracotta); color: white;
+    padding: 0.7rem 1.8rem; border: none; cursor: pointer;
+    transition: background 0.3s; font-family: 'Jost', sans-serif;
+  }
+  .nav-cta:hover { background: var(--mid-brown); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #2C1A0E 0%, #5C3420 45%, #8B6040 100%);
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23B89B5E' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 5rem 5rem;
+    position: relative; z-index: 2;
+    animation: fadeInLeft 1.2s ease both;
+  }
+  @keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .hero-tag {
+    font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-tag::before {
+    content: ''; display: inline-block;
+    width: 2rem; height: 1px; background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--sand);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em { font-style: italic; color: var(--gold-light); }
+  .hero-desc {
+    color: rgba(245,239,224,0.65);
+    font-size: 0.95rem; line-height: 1.8; font-weight: 300;
+    max-width: 400px; margin-bottom: 3rem;
+  }
+  .hero-buttons { display: flex; gap: 1rem; align-items: center; }
+  .btn-primary {
+    background: var(--terracotta); color: white;
+    padding: 1rem 2.5rem; border: none; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-size: 0.72rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent; color: var(--sand);
+    padding: 1rem 2rem; border: 1px solid rgba(245,239,224,0.3);
+    cursor: pointer; font-family: 'Jost', sans-serif; font-size: 0.72rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+    animation: fadeInRight 1.2s ease 0.3s both;
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .hero-image-grid {
+    position: absolute; inset: 0;
+    display: grid; grid-template-rows: 1fr 1fr; gap: 3px;
+  }
+  .hero-img-top, .hero-img-bot {
+    background-size: cover; background-position: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-img-top {
+    background: linear-gradient(135deg, #8B6040 0%, #C4A882 40%, #8B7355 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-img-bot {
+    background: linear-gradient(135deg, #5C3420 0%, #9B7050 40%, #7A4F35 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .room-label {
+    position: absolute; bottom: 1.5rem; left: 1.5rem;
+    background: rgba(44,26,14,0.7); backdrop-filter: blur(8px);
+    padding: 0.5rem 1rem;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .img-placeholder {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; color: rgba(245,239,224,0.7); font-style: italic;
+    user-select: none;
+  }
+
+  .hero-stats {
+    position: absolute; bottom: 3rem; left: 5rem;
+    display: flex; gap: 3rem; z-index: 2;
+    animation: fadeInUp 1s ease 0.6s both;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 300; color: var(--gold-light);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(245,239,224,0.5);
+  }
+
+  /* BOOKING STRIP */
+  .booking-strip {
+    background: var(--deep-brown);
+    padding: 2rem 4rem;
+    display: flex; align-items: center; justify-content: center; gap: 0;
+    border-bottom: 2px solid var(--gold);
+  }
+  .booking-strip .field {
+    flex: 1; padding: 0 2rem;
+    border-right: 1px solid rgba(184,155,94,0.3);
+  }
+  .booking-strip .field:last-of-type { border-right: none; }
+  .field-label {
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: 0.4rem;
+  }
+  .field-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: var(--sand); font-weight: 300;
+  }
+  .book-now-btn {
+    background: var(--terracotta); color: white;
+    padding: 1.2rem 3rem; border: none; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-size: 0.72rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    transition: background 0.3s; margin-left: 2rem;
+    white-space: nowrap;
+  }
+  .book-now-btn:hover { background: var(--gold); }
+
+  /* SECTION BASE */
+  section { padding: 6rem 4rem; }
+
+  /* ROOMS */
+  .rooms-section { background: var(--warm-white); }
+  .section-header { text-align: center; margin-bottom: 4rem; }
+  .section-tag {
+    font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--terracotta); display: block; margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3.5rem); font-weight: 300;
+    color: var(--deep-brown);
+  }
+  .section-title em { font-style: italic; color: var(--terracotta); }
+
+  .rooms-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .room-card {
+    position: relative; overflow: hidden; cursor: pointer;
+    aspect-ratio: 3/4;
+  }
+  .room-card:first-child { grid-row: span 2; aspect-ratio: unset; }
+  .room-bg {
+    width: 100%; height: 100%;
+    transition: transform 0.6s ease;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .room-card:hover .room-bg { transform: scale(1.05); }
+  .room-card:nth-child(1) .room-bg { background: linear-gradient(160deg, #8B6040, #C4A882); }
+  .room-card:nth-child(2) .room-bg { background: linear-gradient(160deg, #5C3420, #9B7050); }
+  .room-card:nth-child(3) .room-bg { background: linear-gradient(160deg, #7A4F35, #B89B5E); }
+  .room-card:nth-child(4) .room-bg { background: linear-gradient(160deg, #4A2D18, #8B6040); }
+  .room-card:nth-child(5) .room-bg { background: linear-gradient(160deg, #6B4530, #A87B5A); }
+
+  .room-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(0deg, rgba(44,26,14,0.85) 0%, transparent 60%);
+    padding: 2rem; display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .room-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300; color: var(--sand); margin-bottom: 0.3rem;
+  }
+  .room-price {
+    font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold-light);
+  }
+  .room-icon {
+    font-size: 3rem; color: rgba(245,239,224,0.6);
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+  }
+
+  /* EXPERIENCE */
+  .experience-section {
+    background: var(--deep-brown);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+    align-items: center;
+  }
+  .exp-visual {
+    position: relative; height: 550px;
+  }
+  .exp-main {
+    position: absolute; top: 0; left: 0; right: 10%;
+    bottom: 10%;
+    background: linear-gradient(135deg, #7A4F35, #C4A882);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .exp-accent {
+    position: absolute; bottom: 0; right: 0;
+    width: 55%; height: 45%;
+    background: var(--terracotta);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .exp-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; color: rgba(245,239,224,0.9); font-style: italic;
+  }
+  .exp-icon-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem; color: rgba(245,239,224,0.6); font-style: italic;
+  }
+  .exp-content { padding: 2rem 0; }
+  .exp-content .section-tag { text-align: left; color: var(--gold); }
+  .exp-content .section-title { text-align: left; color: var(--sand); margin-bottom: 1.5rem; }
+  .exp-desc {
+    color: rgba(245,239,224,0.6); font-size: 0.95rem; line-height: 1.9;
+    font-weight: 300; margin-bottom: 2.5rem;
+  }
+  .amenities { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2.5rem; }
+  .amenity {
+    display: flex; align-items: center; gap: 0.8rem;
+    color: rgba(245,239,224,0.7); font-size: 0.82rem; letter-spacing: 0.05em;
+  }
+  .amenity::before {
+    content: '—'; color: var(--gold); font-size: 0.8rem;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    background: var(--sand);
+    text-align: center; padding: 6rem 4rem;
+  }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem;
+    max-width: 1100px; margin: 3rem auto 0;
+  }
+  .testimonial {
+    background: var(--warm-white); padding: 2.5rem;
+    border-top: 3px solid var(--terracotta);
+    transition: transform 0.3s ease;
+  }
+  .testimonial:hover { transform: translateY(-6px); }
+  .stars { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.2em; margin-bottom: 1.2rem; }
+  .t-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-style: italic; font-weight: 300;
+    color: var(--deep-brown); line-height: 1.7; margin-bottom: 1.5rem;
+  }
+  .t-author { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  /* LOCATION */
+  .location-section {
+    display: grid; grid-template-columns: 1fr 1fr; background: var(--warm-white);
+  }
+  .location-content {
+    padding: 6rem 5rem; display: flex; flex-direction: column; justify-content: center;
+  }
+  .location-content .section-tag { text-align: left; }
+  .location-content .section-title { text-align: left; margin-bottom: 1.5rem; }
+  .location-desc {
+    color: var(--muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 2rem;
+  }
+  .location-points { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2.5rem; }
+  .location-points li {
+    font-size: 0.85rem; color: var(--text);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .location-points li::before {
+    content: ''; width: 6px; height: 6px; background: var(--terracotta);
+    border-radius: 50%; flex-shrink: 0;
+  }
+  .location-map {
+    background: linear-gradient(135deg, #8B6040 0%, #5C3420 50%, #3A1F10 100%);
+    position: relative; overflow: hidden; min-height: 400px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .map-grid {
+    position: absolute; inset: 0;
+    background-image: 
+      linear-gradient(rgba(184,155,94,0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184,155,94,0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .map-pin {
+    width: 20px; height: 20px; background: var(--terracotta);
+    border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+    position: relative; z-index: 2;
+    box-shadow: 0 0 0 6px rgba(196,104,74,0.3), 0 0 0 12px rgba(196,104,74,0.1);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 6px rgba(196,104,74,0.3), 0 0 0 12px rgba(196,104,74,0.1); }
+    50% { box-shadow: 0 0 0 10px rgba(196,104,74,0.2), 0 0 0 20px rgba(196,104,74,0.05); }
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep-brown);
+    padding: 4rem; border-top: 1px solid rgba(184,155,94,0.2);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+    max-width: 1200px; margin: 0 auto 3rem;
+  }
+  .footer-brand .nav-logo { font-size: 1.8rem; display: block; margin-bottom: 1rem; }
+  .footer-brand p {
+    color: rgba(245,239,224,0.4); font-size: 0.82rem; line-height: 1.7; font-weight: 300;
+  }
+  .footer-heading {
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-links a {
+    color: rgba(245,239,224,0.5); font-size: 0.82rem; text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    border-top: 1px solid rgba(184,155,94,0.15); padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .footer-bottom p { color: rgba(245,239,224,0.3); font-size: 0.72rem; letter-spacing: 0.1em; }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 8rem 2rem 5rem; }
+    .hero-stats { left: 2rem; gap: 1.5rem; }
+    .booking-strip { flex-direction: column; padding: 2rem; gap: 1.5rem; }
+    .booking-strip .field { border-right: none; border-bottom: 1px solid rgba(184,155,94,0.3); padding: 1rem 0; width: 100%; }
+    section { padding: 4rem 2rem; }
+    .rooms-grid { grid-template-columns: 1fr 1fr; }
+    .room-card:first-child { grid-row: span 1; }
+    .experience-section { grid-template-columns: 1fr; gap: 3rem; }
+    .exp-visual { height: 300px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .location-section { grid-template-columns: 1fr; }
+    .location-content { padding: 3rem 2rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Villa <span>Serena</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Rooms</a></li>
+    <li><a href="#">Experiences</a></li>
+    <li><a href="#">Dining</a></li>
+    <li><a href="#">Gallery</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <button class="nav-cta">Reserve Now</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Boutique Hotel & Guest House</div>
+    <h1 class="hero-title">
+      Where Every Stay<br>Becomes a <em>Story</em>
+    </h1>
+    <p class="hero-desc">
+      Nestled in lush surroundings, Villa Serena offers an intimate escape where warm hospitality, artisan interiors, and curated experiences blend into unforgettable memories.
+    </p>
+    <div class="hero-buttons">
+      <a href="#" class="btn-primary">Explore Rooms</a>
+      <a href="#" class="btn-ghost">Virtual Tour</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-grid">
+      <div class="hero-img-top">
+        <div class="img-placeholder">Suite</div>
+        <div class="room-label">Luxury Suite · From $280/night</div>
+      </div>
+      <div class="hero-img-bot">
+        <div class="img-placeholder">Garden</div>
+        <div class="room-label">Garden Villa · From $195/night</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">12</span>
+      <span class="stat-label">Unique Rooms</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4.9★</span>
+      <span class="stat-label">Guest Rating</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">8yr</span>
+      <span class="stat-label">Of Excellence</span>
+    </div>
+  </div>
+</section>
+
+<div class="booking-strip">
+  <div class="field">
+    <span class="field-label">Check In</span>
+    <span class="field-value">Select Date</span>
+  </div>
+  <div class="field">
+    <span class="field-label">Check Out</span>
+    <span class="field-value">Select Date</span>
+  </div>
+  <div class="field">
+    <span class="field-label">Guests</span>
+    <span class="field-value">2 Adults</span>
+  </div>
+  <div class="field">
+    <span class="field-label">Room Type</span>
+    <span class="field-value">Any Room</span>
+  </div>
+  <button class="book-now-btn">Check Availability</button>
+</div>
+
+<section class="rooms-section">
+  <div class="section-header reveal">
+    <span class="section-tag">Accommodations</span>
+    <h2 class="section-title">Our <em>Rooms & Suites</em></h2>
+  </div>
+  <div class="rooms-grid reveal">
+    <div class="room-card">
+      <div class="room-bg"><span class="room-icon">Villa</span></div>
+      <div class="room-overlay">
+        <div class="room-name">Presidential Villa</div>
+        <div class="room-price">From $480 per night · Private pool · 80m²</div>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-bg"><span class="room-icon">Suite</span></div>
+      <div class="room-overlay">
+        <div class="room-name">Deluxe Suite</div>
+        <div class="room-price">From $280 per night · King bed · 55m²</div>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-bg"><span class="room-icon">Room</span></div>
+      <div class="room-overlay">
+        <div class="room-name">Superior Room</div>
+        <div class="room-price">From $195 per night · Garden view · 38m²</div>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-bg"><span class="room-icon">Garden</span></div>
+      <div class="room-overlay">
+        <div class="room-name">Garden Cottage</div>
+        <div class="room-price">From $220 per night · Private terrace · 42m²</div>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-bg"><span class="room-icon">Twin</span></div>
+      <div class="room-overlay">
+        <div class="room-name">Classic Twin</div>
+        <div class="room-price">From $150 per night · Twin beds · 32m²</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="experience-section">
+  <div class="exp-visual reveal">
+    <div class="exp-main"><span class="exp-icon-big">∞</span></div>
+    <div class="exp-accent"><span class="exp-number">Crafted Experiences</span></div>
+  </div>
+  <div class="exp-content reveal">
+    <span class="section-tag">The Villa Serena Way</span>
+    <h2 class="section-title">More Than a Stay,<br>An <em>Experience</em></h2>
+    <p class="exp-desc">
+      From sunrise yoga sessions to private candlelit dinners in the garden, every moment at Villa Serena is thoughtfully crafted. Our dedicated concierge team ensures each detail of your stay exceeds expectations.
+    </p>
+    <div class="amenities">
+      <div class="amenity">Farm-to-Table Dining</div>
+      <div class="amenity">Spa & Wellness</div>
+      <div class="amenity">Cultural Tours</div>
+      <div class="amenity">Private Chef Service</div>
+      <div class="amenity">Airport Transfers</div>
+      <div class="amenity">24/7 Concierge</div>
+      <div class="amenity">Infinity Pool</div>
+      <div class="amenity">Curated Events</div>
+    </div>
+    <a href="#" class="btn-primary">View All Experiences</a>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="section-header reveal">
+    <span class="section-tag">Guest Stories</span>
+    <h2 class="section-title">What Our Guests <em>Say</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <p class="t-quote">"Villa Serena is not just a place to sleep — it's a place to breathe. The attention to detail in every corner is extraordinary. We've already planned our return."</p>
+      <div class="t-author">— Sarah & James M., London</div>
+    </div>
+    <div class="testimonial reveal" style="transition-delay:0.15s">
+      <div class="stars">★★★★★</div>
+      <p class="t-quote">"The staff remembered our anniversary and surprised us with a private dinner under the stars. This is the kind of hospitality that restores your faith in travel."</p>
+      <div class="t-author">— Chen Wei, Singapore</div>
+    </div>
+    <div class="testimonial reveal" style="transition-delay:0.3s">
+      <div class="stars">★★★★★</div>
+      <p class="t-quote">"We've stayed at luxury hotels worldwide, but Villa Serena has something none of them have — a genuine soul. Warm, authentic, unforgettable."</p>
+      <div class="t-author">— Amara N., Paris</div>
+    </div>
+  </div>
+</section>
+
+<section class="location-section">
+  <div class="location-content reveal">
+    <span class="section-tag">Getting Here</span>
+    <h2 class="section-title">Perfectly <em>Located</em></h2>
+    <p class="location-desc">
+      Set in the heart of a vibrant destination, Villa Serena offers easy access to cultural landmarks, nature reserves, and local markets — while remaining a tranquil sanctuary away from the rush.
+    </p>
+    <ul class="location-points">
+      <li>15 minutes from International Airport</li>
+      <li>5 minutes to City Center & Markets</li>
+      <li>Walking distance to Nature Trails</li>
+      <li>Free secure parking on-site</li>
+      <li>Complimentary airport shuttle available</li>
+    </ul>
+    <a href="#" class="btn-primary">Get Directions</a>
+  </div>
+  <div class="location-map">
+    <div class="map-grid"></div>
+    <div class="map-pin"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Villa <span>Serena</span></span>
+      <p>A boutique escape for the discerning traveler. Where every detail tells a story, and every story becomes a cherished memory.</p>
+    </div>
+    <div>
+      <div class="footer-heading">Explore</div>
+      <ul class="footer-links">
+        <li><a href="#">Rooms & Suites</a></li>
+        <li><a href="#">Dining</a></li>
+        <li><a href="#">Spa & Wellness</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Information</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Contact</div>
+      <ul class="footer-links">
+        <li><a href="#">+1 (555) 012-3456</a></li>
+        <li><a href="#">hello@villaserena.com</a></li>
+        <li><a href="#">123 Garden Lane</a></li>
+        <li><a href="#">TripAdvisor Reviews</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Villa Serena. All rights reserved.</p>
+    <a href="https://landing-hotel1.netlify.app" target="_blank" style="color: var(--terracotta); text-decoration: none; font-size: 12px; font-weight: 700;">Live Demo ↗</a>
+    <p>Privacy Policy · Terms of Service · Cookie Settings</p>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

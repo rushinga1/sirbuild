@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>APEX Gym — Kigali</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--white:#f5f5f5;--yellow:#f5d20a;--grey:#1a1a1a;--muted:#666;--font-h:'Barlow Condensed',sans-serif;--font-b:'Barlow',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);font-weight:300;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;transition:all 0.3s}
+nav.scrolled{background:rgba(10,10,10,0.97);border-bottom:1px solid rgba(245,210,10,0.1)}
+.logo{font-family:var(--font-h);font-size:28px;color:var(--white);text-decoration:none;letter-spacing:4px;font-weight:900}
+.logo span{color:var(--yellow)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s}
+.nav-links a:hover{color:var(--white)}
+.nav-btn{background:var(--yellow);color:#000;padding:10px 24px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all 0.3s}
+.nav-btn:hover{background:#fff;color:#000}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 80px;position:relative;overflow:hidden;background:var(--bg)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(245,210,10,0.08),transparent 60%)}
+.hero-number{position:absolute;top:50%;right:-20px;transform:translateY(-50%);font-family:var(--font-h);font-size:clamp(200px,30vw,400px);font-weight:900;color:rgba(245,210,10,0.5);line-height:1;letter-spacing:-10px;pointer-events:none;user-select:none}
+.hero-tag{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--yellow);margin-bottom:20px;position:relative;z-index:2}
+.hero-title{font-family:var(--font-h);font-size:clamp(80px,14vw,180px);line-height:0.9;font-weight:900;text-transform:uppercase;letter-spacing:2px;position:relative;z-index:2;margin-bottom:32px}
+.hero-title em{font-style:italic;color:var(--yellow);display:block}
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;position:relative;z-index:2;flex-wrap:wrap;gap:32px}
+.hero-desc{font-size:15px;line-height:1.8;color:var(--muted);max-width:400px}
+.hero-actions{display:flex;gap:16px;align-items:center}
+.btn-yellow{background:var(--yellow);color:#000;padding:18px 40px;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;display:inline-block}
+.btn-yellow:hover{background:#fff}
+.btn-text{color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:flex;align-items:center;gap:8px;transition:color 0.3s}
+.btn-text:hover{color:var(--white)}
+
+/* TICKER */
+.ticker{background:var(--yellow);padding:14px 0;overflow:hidden;white-space:nowrap}
+.ticker-inner{display:inline-flex;gap:64px;animation:scroll 20s linear infinite}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{font-family:var(--font-h);font-size:16px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#000;flex-shrink:0}
+
+/* STATS */
+.stats{background:var(--grey);display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:48px 32px;border-right:1px solid rgba(255,255,255,0.05);text-align:center}
+.stat:last-child{border-right:none}
+.stat-n{font-family:var(--font-h);font-size:64px;font-weight:900;color:var(--yellow);line-height:1;letter-spacing:2px}
+.stat-l{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+/* PROGRAMS */
+.programs{padding:120px 48px;background:var(--bg)}
+.s-tag{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--yellow);margin-bottom:16px}
+.s-title{font-family:var(--font-h);font-size:clamp(48px,7vw,80px);font-weight:900;text-transform:uppercase;line-height:0.95;letter-spacing:2px;margin-bottom:72px}
+.s-title em{font-style:italic;color:var(--yellow)}
+.prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,0.05)}
+.prog-card{background:var(--bg);padding:48px 36px;position:relative;overflow:hidden;transition:background 0.3s}
+.prog-card:hover{background:var(--grey)}
+.prog-icon{font-size:40px;margin-bottom:24px}
+.prog-name{font-family:var(--font-h);font-size:28px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.prog-desc{font-size:13px;line-height:1.8;color:var(--muted);margin-bottom:24px}
+.prog-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--yellow)}
+.prog-num{position:absolute;bottom:-10px;right:16px;font-family:var(--font-h);font-size:100px;font-weight:900;color:rgba(245,210,10,0.6);line-height:1;pointer-events:none}
+
+/* PRICING */
+.pricing{padding:80px 48px 120px;background:var(--grey)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,0.05);margin-top:72px}
+.price-card{background:var(--grey);padding:48px 36px;text-align:center}
+.price-card.hot{background:#111;position:relative}
+.hot-label{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--yellow);color:#000;font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:4px 14px;font-weight:500;white-space:nowrap}
+.price-plan{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.price-amount{font-family:var(--font-h);font-size:72px;font-weight:900;line-height:1;margin-bottom:4px;color:var(--yellow)}
+.price-per{font-size:12px;color:var(--muted);margin-bottom:36px}
+.price-features{list-style:none;text-align:left;display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
+.price-features li{font-size:13px;color:#aaa;display:flex;gap:10px;align-items:center}
+.price-features li::before{content:'—';color:var(--yellow);flex-shrink:0}
+.price-btn{display:block;padding:14px;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;text-align:center;font-weight:500}
+.price-btn-outline{border:1px solid rgba(255,255,255,0.15);color:var(--white)}
+.price-btn-outline:hover{background:rgba(255,255,255,0.08)}
+.price-btn-fill{background:var(--yellow);color:#000}
+.price-btn-fill:hover{background:#fff}
+
+/* CTA */
+.cta{padding:100px 48px;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:'APEX';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-h);font-size:300px;font-weight:900;color:rgba(245,210,10,0.5);white-space:nowrap;pointer-events:none}
+.cta-title{font-family:var(--font-h);font-size:clamp(60px,10vw,120px);font-weight:900;text-transform:uppercase;line-height:0.9;letter-spacing:2px;margin:16px 0 40px}
+.cta-title em{font-style:italic;color:var(--yellow)}
+footer{padding:32px 48px;border-top:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between}
+.fl{font-family:var(--font-h);font-size:20px;color:var(--white);text-decoration:none;font-weight:900;letter-spacing:3px}
+.fl span{color:var(--yellow)}
+.fc{font-size:12px;color:var(--muted)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s,transform 0.8s}.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media(max-width:900px){nav{padding:16px 24px}.nav-links{display:none}.hero{padding:0 24px 60px}.hero-title{font-size:clamp(60px,18vw,120px)}.hero-bottom{flex-direction:column;align-items:flex-start}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:none}.programs,.pricing{padding:80px 24px}.prog-grid,.price-grid{grid-template-columns:1fr}.cta{padding:80px 24px}footer{flex-direction:column;gap:16px;padding:24px;text-align:center}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="#" class="logo">APE<span>X</span></a>
+  <ul class="nav-links"><li><a href="#programs">Programs</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#cta">Join</a></li></ul>
+  <a href="#cta" class="nav-btn">Start Free Trial</a>
+</nav>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-number">1</div>
+  <p class="hero-tag">Kigali's #1 Performance Gym</p>
+  <h1 class="hero-title">Train<br><em>Harder.</em><br>Rise.</h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">Elite training, expert coaches, and a community built on results. Your transformation starts on day one.</p>
+    <div class="hero-actions"><a href="#pricing" class="btn-yellow">Join Now</a><a href="#programs" class="btn-text">View Programs →</a></div>
+  </div>
+</section>
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="tick-item">Strength Training</span><span class="tick-item">★</span>
+    <span class="tick-item">HIIT Classes</span><span class="tick-item">★</span>
+    <span class="tick-item">Personal Training</span><span class="tick-item">★</span>
+    <span class="tick-item">Nutrition Coaching</span><span class="tick-item">★</span>
+    <span class="tick-item">CrossFit</span><span class="tick-item">★</span>
+    <span class="tick-item">Yoga & Recovery</span><span class="tick-item">★</span>
+    <span class="tick-item">Strength Training</span><span class="tick-item">★</span>
+    <span class="tick-item">HIIT Classes</span><span class="tick-item">★</span>
+    <span class="tick-item">Personal Training</span><span class="tick-item">★</span>
+    <span class="tick-item">Nutrition Coaching</span><span class="tick-item">★</span>
+  </div>
+</div>
+<div class="stats">
+  <div class="stat reveal"><div class="stat-n">800+</div><div class="stat-l">Active Members</div></div>
+  <div class="stat reveal d1"><div class="stat-n">15+</div><div class="stat-l">Expert Coaches</div></div>
+  <div class="stat reveal d2"><div class="stat-n">6AM</div><div class="stat-l">Opens Daily</div></div>
+  <div class="stat reveal d3"><div class="stat-n">5★</div><div class="stat-l">Member Rating</div></div>
+</div>
+<section class="programs" id="programs">
+  <p class="s-tag reveal">Train With Us</p>
+  <h2 class="s-title reveal">Our<br><em>Programs</em></h2>
+  <div class="prog-grid">
+    <div class="prog-card reveal"><div class="prog-icon">🏋️</div><div class="prog-name">Strength & Power</div><p class="prog-desc">Progressive overload programming for building raw strength, muscle mass, and functional power.</p><div class="prog-tag">Mon / Wed / Fri</div><div class="prog-num">01</div></div>
+    <div class="prog-card reveal d1"><div class="prog-icon">🔥</div><div class="prog-name">HIIT Burn</div><p class="prog-desc">High-intensity interval training designed to maximize calorie burn and boost cardiovascular fitness.</p><div class="prog-tag">Daily · 45 min</div><div class="prog-num">02</div></div>
+    <div class="prog-card reveal d2"><div class="prog-icon">🥊</div><div class="prog-name">Combat Fitness</div><p class="prog-desc">Boxing, kickboxing, and martial arts-inspired training that builds strength, agility, and confidence.</p><div class="prog-tag">Tue / Thu / Sat</div><div class="prog-num">03</div></div>
+    <div class="prog-card reveal"><div class="prog-icon">🧘</div><div class="prog-name">Yoga & Mobility</div><p class="prog-desc">Recovery-focused sessions to improve flexibility, reduce injury risk, and restore your body.</p><div class="prog-tag">Sun · Morning</div><div class="prog-num">04</div></div>
+    <div class="prog-card reveal d1"><div class="prog-icon">🏃</div><div class="prog-name">Run Club</div><p class="prog-desc">Group running sessions through Kigali's scenic routes. All levels welcome — from 5K to marathon.</p><div class="prog-tag">Sat · 6:00 AM</div><div class="prog-num">05</div></div>
+    <div class="prog-card reveal d2"><div class="prog-icon">🎯</div><div class="prog-name">Personal Training</div><p class="prog-desc">One-on-one sessions with a certified coach. Custom program, guaranteed results, full accountability.</p><div class="prog-tag">By Appointment</div><div class="prog-num">06</div></div>
+  </div>
+</section>
+<section class="pricing" id="pricing">
+  <p class="s-tag reveal">Membership</p>
+  <h2 class="s-title reveal">Simple<br><em>Pricing</em></h2>
+  <div class="price-grid">
+    <div class="price-card reveal">
+      <div class="price-plan">Starter</div>
+      <div class="price-amount">25K</div>
+      <div class="price-per">RWF / month</div>
+      <ul class="price-features"><li>Gym floor access</li><li>Locker room</li><li>2 group classes/week</li><li>Fitness assessment</li></ul>
+      <a href="#cta" class="price-btn price-btn-outline">Get Started</a>
+    </div>
+    <div class="price-card hot reveal d1">
+      <div class="hot-label">Best Value</div>
+      <div class="price-plan">Elite</div>
+      <div class="price-amount">45K</div>
+      <div class="price-per">RWF / month</div>
+      <ul class="price-features"><li>Unlimited access</li><li>All group classes</li><li>1 PT session/month</li><li>Nutrition guidance</li><li>App & progress tracking</li></ul>
+      <a href="#cta" class="price-btn price-btn-fill">Join Now</a>
+    </div>
+    <div class="price-card reveal d2">
+      <div class="price-plan">Pro Athlete</div>
+      <div class="price-amount">80K</div>
+      <div class="price-per">RWF / month</div>
+      <ul class="price-features"><li>Everything in Elite</li><li>4 PT sessions/month</li><li>Custom meal plan</li><li>Recovery sessions</li><li>Priority booking</li></ul>
+      <a href="#cta" class="price-btn price-btn-outline">Go Pro</a>
+    </div>
+  </div>
+</section>
+<section class="cta" id="cta">
+  <p class="s-tag reveal" style="text-align:center">Free Trial</p>
+  <h2 class="cta-title reveal">Your first<br><em>week</em> is free.</h2>
+  <p style="color:var(--muted);font-size:15px;max-width:440px;margin:0 auto 48px;line-height:1.8" class="reveal">No commitment. No contracts. Just come in, train hard, and see what APEX can do for you.</p>
+  <a href="https://wa.me/250700000000" class="btn-yellow reveal">Claim Free Week →</a>
+</section>
+<footer>
+  <a href="#" class="fl">APE<span>X</span></a>
+  <p class="fc">© 2025 APEX Gym · Kigali, Rwanda</p>
+  <a href="https://06-gym.netlify.app" target="_blank" style="color: var(--yellow); text-decoration: none; font-size: 12px; font-weight: 700;">Live Demo ↗</a>
+</footer>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60))
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('on')),{threshold:0.1})
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>

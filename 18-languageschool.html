@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LinguaKigali — Language School</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fdfaf6;--dark:#1a1208;--purple:#5b3fc8;--light-purple:#ede8fb;--muted:#7a6e88;--font-h:'Noto Serif',serif;--font-b:'Nunito',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:var(--font-b);font-weight:300;overflow-x:hidden}
+
+nav.scrolled{background:rgba(253,250,246,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(26,18,8,0.07);display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--font-h);font-size:20px;color:var(--dark);text-decoration:none;font-style:italic}
+.logo span{font-style:normal;color:var(--purple)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:13px;transition:color 0.3s}
+.nav-links a:hover{color:var(--dark)}
+.nav-btn{background:var(--purple);color:#fff;padding:10px 24px;font-size:12px;font-weight:700;text-decoration:none;border-radius:6px;transition:all 0.3s}
+.nav-btn:hover{background:#4a32a8}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--dark);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:100px 64px 80px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 60% 40%,rgba(91,63,200,0.2),transparent 60%)}
+.lang-float{position:absolute;font-size:120px;opacity:0.5;font-family:var(--font-h);user-select:none;pointer-events:none}
+.lf1{top:10%;left:5%;transform:rotate(-15deg)}
+.lf2{top:20%;right:10%;transform:rotate(10deg)}
+.lf3{bottom:20%;left:15%;transform:rotate(-8deg)}
+.lf4{bottom:10%;right:5%;transform:rotate(12deg)}
+.hero-content{position:relative;z-index:2;max-width:680px}
+.h-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:rgba(91,63,200,0.7);margin-bottom:28px}
+.h-title{font-family:var(--font-h);font-size:clamp(48px,6vw,76px);line-height:1.05;color:#fff;margin-bottom:24px}
+.h-title em{font-style:italic;color:#a78bfa}
+.h-desc{font-size:15px;line-height:1.9;color:rgba(255,255,255,0.5);max-width:480px;margin-bottom:40px}
+.lang-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:48px}
+.lang-pill{background:rgba(91,63,200,0.15);border:1px solid rgba(91,63,200,0.3);color:rgba(167,139,250,0.9);font-size:12px;font-weight:700;padding:6px 16px;border-radius:20px;display:flex;align-items:center;gap:6px}
+.h-actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn-purple{background:var(--purple);color:#fff;padding:16px 36px;font-size:12px;font-weight:700;text-decoration:none;border-radius:6px;transition:all 0.3s;display:inline-block}
+.btn-purple:hover{background:#4a32a8;transform:translateY(-2px)}
+.btn-ghost{border:1px solid rgba(255,255,255,0.2);color:#fff;padding:16px 36px;font-size:12px;text-decoration:none;border-radius:6px;transition:all 0.3s;display:inline-block}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.4)}
+.hero-stats{display:flex;gap:48px;margin-top:56px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.06)}
+.hs-num{font-family:var(--font-h);font-size:32px;color:#a78bfa;line-height:1}
+.hs-label{font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px}
+
+/* COURSES */
+.courses{padding:100px 48px;background:var(--bg)}
+.s-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--purple);margin-bottom:16px}
+.s-title{font-family:var(--font-h);font-size:clamp(38px,4.5vw,56px);line-height:1.1;margin-bottom:64px}
+.s-title em{font-style:italic;color:var(--purple)}
+.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.course-card{background:#fff;border:1px solid rgba(26,18,8,0.07);border-radius:12px;padding:36px;transition:all 0.3s;position:relative;overflow:hidden}
+.course-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--purple);transform:scaleX(0);transition:transform 0.4s}
+.course-card:hover::before{transform:scaleX(1)}
+.course-card:hover{box-shadow:0 12px 40px rgba(91,63,200,0.1);transform:translateY(-4px)}
+.course-flag{font-size:36px;margin-bottom:16px}
+.course-lang{font-family:var(--font-h);font-size:22px;margin-bottom:8px}
+.course-level{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:16px}
+.course-desc{font-size:13px;line-height:1.8;color:var(--muted);margin-bottom:20px}
+.course-details{display:flex;gap:16px;flex-wrap:wrap}
+.course-detail{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
+
+/* WHY */
+.why{padding:80px 48px 100px;background:var(--light-purple)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:64px}
+.w-points{display:flex;flex-direction:column;gap:24px}
+.w-point{background:#fff;padding:24px;border-radius:8px;display:flex;gap:16px;align-items:flex-start;transition:box-shadow 0.3s}
+.w-point:hover{box-shadow:0 8px 24px rgba(91,63,200,0.1)}
+.w-icon{font-size:28px;flex-shrink:0}
+.w-title{font-family:var(--font-h);font-size:18px;margin-bottom:6px}
+.w-desc{font-size:13px;line-height:1.7;color:var(--muted)}
+.why-visual{background:var(--dark);border-radius:16px;padding:48px;display:flex;flex-direction:column;gap:20px;position:relative;overflow:hidden}
+.why-visual::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(91,63,200,0.3),transparent 60%)}
+.wv-item{display:flex;align-items:center;justify-content:space-between;position:relative}
+.wv-label{font-size:13px;color:rgba(255,255,255,0.5)}
+.wv-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;margin:0 16px}
+.wv-bar{height:6px;border-radius:3px;background:linear-gradient(to right,var(--purple),#a78bfa)}
+.wv-val{font-size:13px;font-weight:700;color:#a78bfa;width:32px;text-align:right}
+
+/* ENROLL */
+.enroll{padding:80px 48px 100px;background:var(--bg)}
+.enroll-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:64px}
+.enroll-info h3{font-family:var(--font-h);font-size:32px;margin-bottom:16px}
+.enroll-info p{font-size:14px;line-height:1.9;color:var(--muted);margin-bottom:32px}
+.schedule-list{display:flex;flex-direction:column;gap:0}
+.schedule-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(26,18,8,0.07);font-size:13px}
+.sc-label{color:var(--muted)}
+.sc-val{font-weight:700}
+.enroll-form{display:flex;flex-direction:column;gap:16px}
+.e-in{background:#fff;border:1px solid rgba(26,18,8,0.1);color:var(--dark);padding:14px 18px;font-family:var(--font-b);font-size:14px;outline:none;transition:border-color 0.3s;border-radius:6px}
+.e-in:focus{border-color:rgba(91,63,200,0.4)}
+.e-in option{background:#fff}
+.e-btn{background:var(--purple);color:#fff;padding:16px;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:var(--font-b);transition:all 0.3s;border-radius:6px}
+.e-btn:hover{background:#4a32a8}
+
+footer{padding:32px 48px;background:var(--dark);display:flex;align-items:center;justify-content:space-between}
+.fl{font-family:var(--font-h);font-size:18px;color:#fff;text-decoration:none;font-style:italic}.fl span{font-style:normal;color:#a78bfa}
+.fc{font-size:12px;color:rgba(255,255,255,0.25)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s,transform 0.8s}.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media(max-width:900px){nav{padding:16px 24px}.nav-links{display:none}.hero{padding:120px 24px 60px}.hero-stats{flex-wrap:wrap;gap:24px}.courses,.why,.enroll{padding:80px 24px}.course-grid{grid-template-columns:1fr}.why-grid,.enroll-grid{grid-template-columns:1fr;gap:48px}footer{flex-direction:column;gap:16px;padding:24px;text-align:center}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="logo"><span>Lingua</span>Kigali</a>
+  <ul class="nav-links"><li><a href="#courses">Courses</a></li><li><a href="#why">Why Us</a></li><li><a href="#enroll">Enroll</a></li></ul>
+  <a href="#enroll" class="nav-btn">Enroll Now</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="lang-float lf1">Bonjour</div>
+  <div class="lang-float lf2">Hello</div>
+  <div class="lang-float lf3">Mwaramutse</div>
+  <div class="lang-float lf4">Hola</div>
+  <div class="hero-content">
+    <p class="h-tag">Language School · Kigali, Rwanda</p>
+    <h1 class="h-title">Speak the World's<br>Languages with<br><em>Confidence.</em></h1>
+    <p class="h-desc">Professional language courses for adults and students. In-person, online, and corporate training in English, French, Kinyarwanda, Spanish and more.</p>
+    <div class="lang-pills">
+      <span class="lang-pill">🇬🇧 English</span>
+      <span class="lang-pill">🇫🇷 French</span>
+      <span class="lang-pill">🇷🇼 Kinyarwanda</span>
+      <span class="lang-pill">🇪🇸 Spanish</span>
+      <span class="lang-pill">🇨🇳 Mandarin</span>
+    </div>
+    <div class="h-actions">
+      <a href="#enroll" class="btn-purple">Enroll Today</a>
+      <a href="#courses" class="btn-ghost">Browse Courses</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hs-num">1,500+</div><div class="hs-label">Students Taught</div></div>
+      <div><div class="hs-num">8</div><div class="hs-label">Languages Offered</div></div>
+      <div><div class="hs-num">95%</div><div class="hs-label">Pass Rate</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="courses" id="courses">
+  <p class="s-tag reveal">What We Teach</p>
+  <h2 class="s-title reveal">Our <em>Language</em> Courses</h2>
+  <div class="course-grid">
+    <div class="course-card reveal"><div class="course-flag">🇬🇧</div><div class="course-lang">English</div><div class="course-level">Beginner · Intermediate · Advanced</div><p class="course-desc">Business English, conversation, IELTS preparation, and academic writing. The most requested course we offer.</p><div class="course-details"><span class="course-detail">📅 3 months</span><span class="course-detail">⏰ 3x/week</span><span class="course-detail">💰 RWF 80K</span></div></div>
+    <div class="course-card reveal d1"><div class="course-flag">🇫🇷</div><div class="course-lang">French</div><div class="course-level">All Levels · DELF Prep</div><p class="course-desc">French conversation, grammar, DELF/DALF exam preparation, and professional French for business contexts.</p><div class="course-details"><span class="course-detail">📅 3 months</span><span class="course-detail">⏰ 3x/week</span><span class="course-detail">💰 RWF 80K</span></div></div>
+    <div class="course-card reveal d2"><div class="course-flag">🇷🇼</div><div class="course-lang">Kinyarwanda</div><div class="course-level">For Expats & Diaspora</div><p class="course-desc">Structured Kinyarwanda for internationals, NGO workers, and diaspora reconnecting with their heritage.</p><div class="course-details"><span class="course-detail">📅 2 months</span><span class="course-detail">⏰ 2x/week</span><span class="course-detail">💰 RWF 60K</span></div></div>
+    <div class="course-card reveal"><div class="course-flag">🇪🇸</div><div class="course-lang">Spanish</div><div class="course-level">Beginner · Intermediate</div><p class="course-desc">Conversational Spanish with a Latin American accent focus. Perfect for travel, work, or expanding your horizons.</p><div class="course-details"><span class="course-detail">📅 3 months</span><span class="course-detail">⏰ 2x/week</span><span class="course-detail">💰 RWF 75K</span></div></div>
+    <div class="course-card reveal d1"><div class="course-flag">🇨🇳</div><div class="course-lang">Mandarin</div><div class="course-level">Beginner Only</div><p class="course-desc">Introduction to Mandarin tones, characters, and everyday conversation. High demand for trade and business.</p><div class="course-details"><span class="course-detail">📅 4 months</span><span class="course-detail">⏰ 2x/week</span><span class="course-detail">💰 RWF 90K</span></div></div>
+    <div class="course-card reveal d2"><div class="course-flag">🏢</div><div class="course-lang">Corporate Training</div><div class="course-level">Custom · On-site</div><p class="course-desc">Tailored language programs for companies and NGOs. We come to your office and train your full team.</p><div class="course-details"><span class="course-detail">📅 Flexible</span><span class="course-detail">⏰ Custom</span><span class="course-detail">💰 Quote</span></div></div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <p class="s-tag reveal">Why LinguaKigali</p>
+  <h2 class="s-title reveal">The Smarter Way<br>to <em>Learn</em></h2>
+  <div class="why-grid">
+    <div class="w-points">
+      <div class="w-point reveal"><div class="w-icon">👩‍🏫</div><div><div class="w-title">Native & Certified Teachers</div><p class="w-desc">All instructors are certified language teachers with native or near-native fluency in their subject language.</p></div></div>
+      <div class="w-point reveal d1"><div class="w-icon">📱</div><div><div class="w-title">Online & In-Person</div><p class="w-desc">Learn from our Kigali campus or anywhere in the world via our interactive online platform.</p></div></div>
+      <div class="w-point reveal d2"><div class="w-icon">🏆</div><div><div class="w-title">Internationally Recognised Certificates</div><p class="w-desc">Our courses are aligned with CEFR standards. Earn certificates accepted by employers and universities globally.</p></div></div>
+    </div>
+    <div class="why-visual reveal d2">
+      <div class="wv-item"><span class="wv-label">English</span><div class="wv-bar-wrap"><div class="wv-bar" style="width:92%"></div></div><span class="wv-val">92%</span></div>
+      <div class="wv-item"><span class="wv-label">French</span><div class="wv-bar-wrap"><div class="wv-bar" style="width:88%"></div></div><span class="wv-val">88%</span></div>
+      <div class="wv-item"><span class="wv-label">Kinyarwanda</span><div class="wv-bar-wrap"><div class="wv-bar" style="width:98%"></div></div><span class="wv-val">98%</span></div>
+      <div class="wv-item"><span class="wv-label">Spanish</span><div class="wv-bar-wrap"><div class="wv-bar" style="width:85%"></div></div><span class="wv-val">85%</span></div>
+      <p style="font-size:11px;color:rgba(255,255,255,0.3);text-align:center;margin-top:8px">Student exam pass rates</p>
+    </div>
+  </div>
+</section>
+
+<section class="enroll" id="enroll">
+  <p class="s-tag reveal">Enroll</p>
+  <h2 class="s-title reveal">Start Your <em>Journey</em> Today</h2>
+  <div class="enroll-grid">
+    <div class="enroll-info reveal">
+      <h3>New classes starting monthly.</h3>
+      <p>Small groups of maximum 12 students ensure personal attention and rapid progress. Enroll now to secure your spot.</p>
+      <div class="schedule-list">
+        <div class="schedule-item"><span class="sc-label">Morning Classes</span><span class="sc-val">7:00 – 9:00 AM</span></div>
+        <div class="schedule-item"><span class="sc-label">Afternoon Classes</span><span class="sc-val">2:00 – 4:00 PM</span></div>
+        <div class="schedule-item"><span class="sc-label">Evening Classes</span><span class="sc-val">6:00 – 8:00 PM</span></div>
+        <div class="schedule-item"><span class="sc-label">Weekend Intensive</span><span class="sc-val">Sat–Sun, 9AM – 1PM</span></div>
+      </div>
+    </div>
+    <div class="enroll-form reveal d1">
+      <input class="e-in" type="text" placeholder="Your Full Name"/>
+      <input class="e-in" type="tel" placeholder="Phone Number"/>
+      <select class="e-in" style="cursor:pointer"><option>Select Language</option><option>English</option><option>French</option><option>Kinyarwanda</option><option>Spanish</option><option>Mandarin</option><option>Corporate Training</option></select>
+      <select class="e-in" style="cursor:pointer"><option>Your Level</option><option>Complete Beginner</option><option>Some Experience</option><option>Intermediate</option><option>Advanced</option></select>
+      <select class="e-in" style="cursor:pointer"><option>Preferred Schedule</option><option>Morning</option><option>Afternoon</option><option>Evening</option><option>Weekend</option><option>Online</option></select>
+      <button class="e-btn" onclick="this.textContent='✓ Enrollment Request Sent!'">Enroll Now</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="#" class="fl"><span>Lingua</span>Kigali</a>
+  <p class="fc">© 2025 LinguaKigali Language School · Rwanda</p>
+  <a href="https://18-languageschool.netlify.app" target="_blank" style="color: #a78bfa; text-decoration: none; font-size: 12px; font-weight: 700;">Live Demo ↗</a>
+</footer>
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('on')),{threshold:0.1})
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>

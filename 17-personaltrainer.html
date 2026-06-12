@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Coach Theo — Personal Trainer Kigali</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Source+Sans+3:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0c0c0c;--white:#f5f5f5;--lime:#a3e635;--grey:#1a1a1a;--muted:#666;--font-h:'Oswald',sans-serif;--font-b:'Source Sans 3',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);font-weight:300;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;transition:all 0.3s}
+nav.scrolled{background:rgba(12,12,12,0.97);border-bottom:1px solid rgba(163,230,53,0.1)}
+.logo{font-family:var(--font-h);font-size:22px;color:var(--white);text-decoration:none;letter-spacing:3px;font-weight:700}
+.logo span{color:var(--lime)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s}
+.nav-links a:hover{color:var(--white)}
+.nav-btn{background:var(--lime);color:#000;padding:10px 24px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;text-decoration:none;font-family:var(--font-h);transition:all 0.3s}
+.nav-btn:hover{background:#bef264}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:var(--bg);overflow:hidden;position:relative}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--lime),transparent)}
+.hero-left{padding:160px 64px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.h-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:rgba(163,230,53,0.7);margin-bottom:24px}
+.h-title{font-family:var(--font-h);font-size:clamp(52px,7vw,88px);line-height:0.95;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:28px}
+.h-title span{color:var(--lime);display:block}
+.h-desc{font-size:15px;line-height:1.9;color:var(--muted);max-width:400px;margin-bottom:48px}
+.h-actions{display:flex;gap:16px}
+.btn-lime{background:var(--lime);color:#000;padding:16px 36px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;text-decoration:none;font-family:var(--font-h);transition:all 0.3s;display:inline-block}
+.btn-lime:hover{background:#bef264}
+.btn-ghost{border:1px solid rgba(255,255,255,0.15);color:var(--white);padding:16px 36px;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;font-family:var(--font-h);transition:all 0.3s;display:inline-block}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.4)}
+.hero-right{position:relative;background:var(--grey);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-right::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(163,230,53,0.08),transparent 60%)}
+.hero-visual{font-size:160px;position:relative;z-index:2}
+.hero-badge{position:absolute;bottom:80px;left:-20px;background:var(--lime);color:#000;padding:20px 28px;z-index:3}
+.badge-num{font-family:var(--font-h);font-size:40px;font-weight:700;line-height:1}
+.badge-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:700}
+
+/* STATS */
+.stats{background:var(--lime);display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:36px 28px;border-right:1px solid rgba(0,0,0,0.1);text-align:center}
+.stat:last-child{border-right:none}
+.stat-n{font-family:var(--font-h);font-size:52px;font-weight:700;color:#000;line-height:1}
+.stat-l{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,0.6);margin-top:6px;font-weight:700}
+
+/* PROGRAMS */
+.programs{padding:100px 48px;background:var(--bg)}
+.s-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--lime);margin-bottom:16px}
+.s-title{font-family:var(--font-h);font-size:clamp(44px,6vw,72px);font-weight:700;text-transform:uppercase;line-height:0.95;letter-spacing:1px;margin-bottom:72px}
+.s-title span{color:var(--lime)}
+.prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,0.05)}
+.prog-card{background:var(--bg);padding:48px 36px;position:relative;overflow:hidden;transition:background 0.3s}
+.prog-card:hover{background:var(--grey)}
+.prog-num{position:absolute;top:-10px;right:16px;font-family:var(--font-h);font-size:100px;font-weight:700;color:rgba(163,230,53,0.6);line-height:1}
+.prog-icon{font-size:36px;margin-bottom:20px}
+.prog-name{font-family:var(--font-h);font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.prog-desc{font-size:13px;line-height:1.8;color:var(--muted);margin-bottom:24px}
+.prog-detail{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--lime)}
+
+/* TRANSFORMATION */
+.transform{padding:80px 48px 100px;background:var(--grey)}
+.transform-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:64px}
+.t-points{display:flex;flex-direction:column;gap:24px}
+.t-point{display:flex;gap:20px;align-items:flex-start;padding:20px;border-left:2px solid transparent;transition:border-color 0.3s}
+.t-point:hover{border-color:var(--lime)}
+.t-icon{font-size:28px;flex-shrink:0}
+.t-title{font-family:var(--font-h);font-size:18px;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.t-desc{font-size:13px;line-height:1.7;color:var(--muted)}
+.t-visual{background:var(--bg);aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:40px;position:relative;overflow:hidden}
+.t-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(163,230,53,0.06),transparent 60%)}
+.result-num{font-family:var(--font-h);font-size:80px;font-weight:700;color:var(--lime);line-height:1;text-align:center}
+.result-label{font-family:var(--font-h);font-size:18px;color:var(--white);text-transform:uppercase;letter-spacing:2px;text-align:center}
+.result-divider{width:40px;height:2px;background:var(--lime)}
+
+/* PRICING */
+.pricing{padding:80px 48px 100px;background:var(--bg)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,0.05);margin-top:72px}
+.price-card{background:var(--bg);padding:48px 36px;text-align:center}
+.price-card.hot{background:var(--lime)}
+.price-plan{font-family:var(--font-h);font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.price-card.hot .price-plan{color:rgba(0,0,0,0.5)}
+.price-val{font-family:var(--font-h);font-size:64px;font-weight:700;line-height:1;margin-bottom:4px}
+.price-card.hot .price-val{color:#000}
+.price-per{font-size:12px;color:var(--muted);margin-bottom:32px}
+.price-card.hot .price-per{color:rgba(0,0,0,0.5)}
+.price-list{list-style:none;text-align:left;display:flex;flex-direction:column;gap:10px;margin-bottom:40px}
+.price-list li{font-size:13px;color:#aaa;display:flex;gap:10px}
+.price-card.hot .price-list li{color:rgba(0,0,0,0.7)}
+.price-list li::before{content:'✓';color:var(--lime);flex-shrink:0}
+.price-card.hot .price-list li::before{color:#000}
+.price-btn{display:block;text-align:center;padding:14px;font-family:var(--font-h);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;text-decoration:none;transition:all 0.3s;border:1px solid rgba(255,255,255,0.15);color:var(--white)}
+.price-btn:hover{background:rgba(255,255,255,0.08)}
+.price-btn-dark{border-color:rgba(0,0,0,0.2);color:#000;background:transparent}
+.price-btn-dark:hover{background:rgba(0,0,0,0.1)}
+
+/* CTA */
+.cta{padding:100px 48px;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:'RESULTS';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-h);font-size:200px;font-weight:700;color:rgba(163,230,53,0.5);white-space:nowrap;pointer-events:none}
+.cta-title{font-family:var(--font-h);font-size:clamp(56px,8vw,100px);font-weight:700;text-transform:uppercase;line-height:0.95;letter-spacing:1px;margin:16px 0 40px;position:relative}
+.cta-title span{color:var(--lime)}
+
+footer{padding:32px 48px;border-top:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between}
+.fl{font-family:var(--font-h);font-size:18px;color:var(--white);text-decoration:none;font-weight:700;letter-spacing:2px}.fl span{color:var(--lime)}
+.fc{font-size:12px;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s,transform 0.8s}.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media(max-width:900px){nav{padding:16px 24px}.nav-links{display:none}.hero{grid-template-columns:1fr;min-height:auto}.hero-left{padding:120px 24px 48px}.hero-right{height:280px}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:none}.programs,.transform,.pricing{padding:80px 24px}.prog-grid,.price-grid{grid-template-columns:1fr}.transform-grid{grid-template-columns:1fr;gap:48px}.cta{padding:80px 24px}footer{flex-direction:column;gap:16px;padding:24px;text-align:center}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="#" class="logo">Coach<span>.</span>Theo</a>
+  <ul class="nav-links"><li><a href="#programs">Programs</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#cta">Start</a></li></ul>
+  <a href="#cta" class="nav-btn">Start Today</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <p class="h-tag">Certified Personal Trainer · Kigali</p>
+    <h1 class="h-title">Build The Body<br><span>You Deserve.</span></h1>
+    <p class="h-desc">Online and in-person personal training tailored to your goals. Strength, weight loss, performance — I deliver results, guaranteed.</p>
+    <div class="h-actions"><a href="#pricing" class="btn-lime">Start Your Journey</a><a href="#programs" class="btn-ghost">View Programs</a></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">🏋️</div>
+    <div class="hero-badge"><div class="badge-num">200+</div><div class="badge-label">Clients Transformed</div></div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat reveal"><div class="stat-n">200+</div><div class="stat-l">Transformations</div></div>
+  <div class="stat reveal d1"><div class="stat-n">5yr</div><div class="stat-l">Experience</div></div>
+  <div class="stat reveal d2"><div class="stat-n">98%</div><div class="stat-l">Client Retention</div></div>
+  <div class="stat reveal d3"><div class="stat-n">3</div><div class="stat-l">Certifications</div></div>
+</div>
+
+<section class="programs" id="programs">
+  <p class="s-tag reveal">Training Programs</p>
+  <h2 class="s-title reveal">Choose Your<br><span>Program</span></h2>
+  <div class="prog-grid">
+    <div class="prog-card reveal"><div class="prog-num">01</div><div class="prog-icon">🔥</div><div class="prog-name">Fat Loss</div><p class="prog-desc">Scientifically programmed cardio and resistance training to burn fat while preserving lean muscle mass.</p><div class="prog-detail">12-week program · Online or in-person</div></div>
+    <div class="prog-card reveal d1"><div class="prog-num">02</div><div class="prog-icon">💪</div><div class="prog-name">Muscle Build</div><p class="prog-desc">Progressive overload hypertrophy training with custom nutrition guidance for maximum muscle growth.</p><div class="prog-detail">16-week program · Gym-based</div></div>
+    <div class="prog-card reveal d2"><div class="prog-num">03</div><div class="prog-icon">⚡</div><div class="prog-name">Athletic Performance</div><p class="prog-desc">Speed, power, agility, and endurance development for competitive athletes and serious fitness enthusiasts.</p><div class="prog-detail">Ongoing · Sport-specific</div></div>
+  </div>
+</section>
+
+<section class="transform">
+  <p class="s-tag reveal">Why It Works</p>
+  <h2 class="s-title reveal">The <span>System</span><br>That Delivers</h2>
+  <div class="transform-grid">
+    <div class="t-points">
+      <div class="t-point reveal"><div class="t-icon">📋</div><div><div class="t-title">Custom Plan</div><p class="t-desc">Every client gets a fully personalised training and nutrition plan based on their body, goals, and lifestyle.</p></div></div>
+      <div class="t-point reveal d1"><div class="t-icon">📱</div><div><div class="t-title">Daily Check-ins</div><p class="t-desc">WhatsApp accountability, weekly progress reviews, and form checks keep you on track every single day.</p></div></div>
+      <div class="t-point reveal d2"><div class="t-icon">🥗</div><div><div class="t-title">Nutrition Guidance</div><p class="t-desc">Flexible meal planning using local Rwandan foods. No fad diets — just sustainable habits that work long-term.</p></div></div>
+      <div class="t-point reveal d3"><div class="t-icon">📈</div><div><div class="t-title">Tracked Progress</div><p class="t-desc">Monthly measurements, photos, and fitness tests show exactly how far you've come and where to push next.</p></div></div>
+    </div>
+    <div class="t-visual reveal d2">
+      <div class="result-num">-18kg</div>
+      <div class="result-divider"></div>
+      <div class="result-label">Average client<br>fat loss in 12 weeks</div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <p class="s-tag reveal">Investment</p>
+  <h2 class="s-title reveal">Choose Your<br><span>Plan</span></h2>
+  <div class="price-grid">
+    <div class="price-card reveal">
+      <div class="price-plan">Online</div>
+      <div class="price-val">RWF 40K</div>
+      <div class="price-per">per month</div>
+      <ul class="price-list"><li>Custom training plan</li><li>Nutrition guidelines</li><li>Weekly check-in</li><li>WhatsApp support</li></ul>
+      <a href="#cta" class="price-btn">Get Started</a>
+    </div>
+    <div class="price-card hot reveal d1">
+      <div class="price-plan">In-Person</div>
+      <div class="price-val">RWF 80K</div>
+      <div class="price-per">per month · 8 sessions</div>
+      <ul class="price-list"><li>8 PT sessions/month</li><li>Custom plan & nutrition</li><li>Daily accountability</li><li>Progress tracking</li><li>Body composition analysis</li></ul>
+      <a href="#cta" class="price-btn price-btn-dark">Book Now</a>
+    </div>
+    <div class="price-card reveal d2">
+      <div class="price-plan">Elite</div>
+      <div class="price-val">RWF 150K</div>
+      <div class="price-per">per month · unlimited</div>
+      <ul class="price-list"><li>Unlimited sessions</li><li>Fully custom everything</li><li>Meal prep guidance</li><li>Competition prep</li><li>24/7 coach access</li></ul>
+      <a href="#cta" class="price-btn">Go Elite</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <p class="s-tag reveal" style="text-align:center">Free Consultation</p>
+  <h2 class="cta-title reveal">Your first<br>session is <span>free.</span></h2>
+  <p style="color:var(--muted);font-size:15px;max-width:440px;margin:0 auto 48px;line-height:1.8;position:relative" class="reveal">Let's talk about your goals, current fitness level, and build a plan that works. No commitment required.</p>
+  <a href="https://wa.me/250700000000" class="btn-lime reveal" style="position:relative">Claim Free Session 💪</a>
+</section>
+
+<footer>
+  <a href="#" class="fl">Coach<span>.</span>Theo</a>
+  <p class="fc">© 2025 Coach Theo · Personal Trainer · Kigali, Rwanda</p>
+  <a href="https://17-personaltrainer.netlify.app" target="_blank" style="color: var(--lime); text-decoration: none; font-size: 12px; font-weight: 700;">Live Demo ↗</a>
+</footer>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60))
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('on')),{threshold:0.1})
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>

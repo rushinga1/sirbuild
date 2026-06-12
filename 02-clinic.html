@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MediCare Clinic — Kigali</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f7f9fc;--navy:#0a1628;--blue:#1a4a8a;--light-blue:#e8f0fb;--accent:#2d7dd2;--muted:#6b7d9a;--white:#ffffff;--font-h:'Cormorant Garamond',serif;--font-b:'Outfit',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--navy);font-family:var(--font-b);font-weight:300;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;background:rgba(247,249,252,0.95);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(10,22,40,0.06)}
+.logo{font-family:var(--font-h);font-size:22px;color:var(--navy);text-decoration:none;font-weight:600}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:13px;letter-spacing:0.5px;transition:color 0.3s}
+.nav-links a:hover{color:var(--navy)}
+.nav-btn{background:var(--accent);color:#fff;padding:10px 24px;font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:500;text-decoration:none;font-family:var(--font-b);border-radius:2px;transition:all 0.3s}
+.nav-btn:hover{background:var(--blue)}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--navy);display:grid;grid-template-columns:1fr 1fr;overflow:hidden;position:relative}
+.hero::before{content:'';position:absolute;top:0;right:0;width:55%;height:100%;background:var(--blue);clip-path:polygon(8% 0,100% 0,100% 100%,0 100%)}
+.hero-left{padding:160px 64px 80px;position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(45,125,210,0.15);border:1px solid rgba(45,125,210,0.3);padding:8px 16px;margin-bottom:32px;width:fit-content}
+.badge-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.badge-text{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7)}
+.hero-title{font-family:var(--font-h);font-size:clamp(44px,5vw,68px);line-height:1.1;color:#fff;margin-bottom:24px;font-weight:600}
+.hero-title em{font-style:italic;color:#7eb8f7}
+.hero-desc{font-size:15px;line-height:1.9;color:rgba(255,255,255,0.6);max-width:400px;margin-bottom:48px}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn-white{background:#fff;color:var(--navy);padding:16px 36px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;display:inline-block}
+.btn-white:hover{background:#e8f0fb}
+.btn-outline-w{border:1px solid rgba(255,255,255,0.3);color:#fff;padding:16px 36px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;display:inline-block}
+.btn-outline-w:hover{border-color:#fff;background:rgba(255,255,255,0.08)}
+.hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:160px 48px 80px 20px}
+.hero-card{background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);padding:40px;width:100%;max-width:360px}
+.card-title{font-family:var(--font-h);font-size:22px;color:#fff;margin-bottom:24px;font-weight:600}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.form-group input,.form-group select{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:12px 16px;font-family:var(--font-b);font-size:14px;outline:none;transition:border-color 0.3s}
+.form-group input:focus,.form-group select:focus{border-color:rgba(255,255,255,0.3)}
+.form-group input::placeholder{color:rgba(255,255,255,0.3)}
+.form-group select option{background:var(--navy)}
+.submit-btn{width:100%;background:var(--accent);color:#fff;padding:14px;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;border:none;cursor:pointer;font-family:var(--font-b);margin-top:8px;transition:background 0.3s}
+.submit-btn:hover{background:#1a5cb8}
+
+/* STATS */
+.stats{background:#fff;padding:0 48px;display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(10,22,40,0.08)}
+.stat{padding:40px 32px;border-right:1px solid rgba(10,22,40,0.06);text-align:center}
+.stat:last-child{border-right:none}
+.stat-num{font-family:var(--font-h);font-size:52px;color:var(--accent);font-weight:600;line-height:1}
+.stat-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+/* SERVICES */
+.services{padding:120px 48px;background:var(--bg)}
+.section-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.section-title{font-family:var(--font-h);font-size:clamp(38px,4.5vw,56px);line-height:1.1;margin-bottom:64px;font-weight:600}
+.section-title em{font-style:italic;color:var(--accent)}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.service-card{background:#fff;padding:40px;border:1px solid rgba(10,22,40,0.06);transition:all 0.3s;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--accent);transition:height 0.4s}
+.service-card:hover::before{height:100%}
+.service-card:hover{box-shadow:0 12px 48px rgba(10,22,40,0.08);transform:translateY(-4px)}
+.service-icon{font-size:36px;margin-bottom:20px}
+.service-name{font-family:var(--font-h);font-size:22px;margin-bottom:12px;font-weight:600}
+.service-desc{font-size:13px;line-height:1.8;color:var(--muted)}
+
+/* DOCTORS */
+.doctors{padding:80px 48px 120px;background:#fff}
+.doctors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px}
+.doctor-card{text-align:center}
+.doctor-avatar{width:120px;height:120px;border-radius:50%;background:var(--light-blue);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:48px;border:3px solid rgba(45,125,210,0.15)}
+.doctor-name{font-family:var(--font-h);font-size:22px;margin-bottom:6px;font-weight:600}
+.doctor-role{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent)}
+
+/* CTA */
+.cta{padding:100px 48px;background:var(--navy);text-align:center;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(45,125,210,0.2),transparent 60%)}
+.cta-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#7eb8f7;margin-bottom:16px}
+.cta-title{font-family:var(--font-h);font-size:clamp(44px,6vw,72px);color:#fff;line-height:1.1;margin-bottom:16px;font-weight:600}
+.cta-title em{font-style:italic;color:#7eb8f7}
+.cta-sub{color:rgba(255,255,255,0.5);font-size:15px;margin-bottom:48px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.8}
+.phone-link{display:inline-flex;align-items:center;gap:12px;font-family:var(--font-h);font-size:32px;color:#fff;text-decoration:none;transition:color 0.3s}
+.phone-link:hover{color:#7eb8f7}
+
+footer{padding:32px 48px;background:#060e1a;display:flex;align-items:center;justify-content:space-between}
+.footer-copy{font-size:12px;color:rgba(255,255,255,0.3)}
+.footer-logo{font-family:var(--font-h);font-size:18px;color:#fff;text-decoration:none;font-weight:600}
+.footer-logo span{color:#7eb8f7}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s,transform 0.7s}
+.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+@media(max-width:900px){
+  nav{padding:16px 24px}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:120px 24px 48px}
+  .hero-right{padding:0 24px 60px}
+  .stats{grid-template-columns:repeat(2,1fr);padding:0 24px}
+  .stat:nth-child(2){border-right:none}
+  .services,.doctors{padding:80px 24px}
+  .services-grid,.doctors-grid{grid-template-columns:1fr}
+  .cta{padding:80px 24px}
+  footer{flex-direction:column;gap:16px;padding:24px;text-align:center}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="logo">Medi<span>Care</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#doctors">Doctors</a></li>
+    <li><a href="#book">Book</a></li>
+  </ul>
+  <a href="#book" class="nav-btn">Book Appointment</a>
+</nav>
+
+<section class="hero" id="book">
+  <div class="hero-left">
+    <div class="hero-badge"><span class="badge-dot"></span><span class="badge-text">Accepting New Patients</span></div>
+    <h1 class="hero-title">Your Health,<br>Our <em>Priority.</em></h1>
+    <p class="hero-desc">Expert medical care delivered with compassion. From general consultations to specialist referrals — we're here for your whole family.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-white">Our Services</a>
+      <a href="tel:+250700000000" class="btn-outline-w">Call Now</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="card-title">Book an Appointment</div>
+      <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your name"/></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+250 700 000 000"/></div>
+      <div class="form-group"><label>Department</label>
+        <select>
+          <option>General Consultation</option>
+          <option>Pediatrics</option>
+          <option>Gynecology</option>
+          <option>Cardiology</option>
+          <option>Dermatology</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Preferred Date</label><input type="date"/></div>
+      <button class="submit-btn" onclick="this.textContent='✓ Appointment Requested!'">Book Now</button>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat reveal"><div class="stat-num">15+</div><div class="stat-label">Specialist Doctors</div></div>
+  <div class="stat reveal d1"><div class="stat-num">10K+</div><div class="stat-label">Patients Served</div></div>
+  <div class="stat reveal d2"><div class="stat-num">24/7</div><div class="stat-label">Emergency Care</div></div>
+  <div class="stat reveal d3"><div class="stat-num">8</div><div class="stat-label">Departments</div></div>
+</div>
+
+<section class="services" id="services">
+  <p class="section-tag reveal">What We Offer</p>
+  <h2 class="section-title reveal">Comprehensive<br><em>Medical Services</em></h2>
+  <div class="services-grid">
+    <div class="service-card reveal"><div class="service-icon">🩺</div><div class="service-name">General Medicine</div><p class="service-desc">Full health assessments, chronic disease management, and preventive care for adults and children.</p></div>
+    <div class="service-card reveal d1"><div class="service-icon">👶</div><div class="service-name">Pediatrics</div><p class="service-desc">Specialized care for infants, children and adolescents. Vaccinations, growth monitoring, and more.</p></div>
+    <div class="service-card reveal d2"><div class="service-icon">🫀</div><div class="service-name">Cardiology</div><p class="service-desc">Advanced heart health diagnostics including ECG, echocardiography, and cardiovascular risk assessment.</p></div>
+    <div class="service-card reveal"><div class="service-icon">🦷</div><div class="service-name">Dental Care</div><p class="service-desc">Complete dental services — cleaning, fillings, extractions, and cosmetic procedures by skilled dentists.</p></div>
+    <div class="service-card reveal d1"><div class="service-icon">🔬</div><div class="service-name">Laboratory</div><p class="service-desc">On-site diagnostic lab with same-day results for blood tests, urinalysis, and pathology screenings.</p></div>
+    <div class="service-card reveal d2"><div class="service-icon">🚑</div><div class="service-name">Emergency Care</div><p class="service-desc">24/7 emergency medical services. Immediate response, stabilization, and coordination with hospitals.</p></div>
+  </div>
+</section>
+
+<section class="doctors" id="doctors">
+  <p class="section-tag reveal">Our Team</p>
+  <h2 class="section-title reveal">Meet Our <em>Expert</em> Doctors</h2>
+  <div class="doctors-grid">
+    <div class="doctor-card reveal"><div class="doctor-avatar">👨‍⚕️</div><div class="doctor-name">Dr. Jean-Paul Mutabazi</div><div class="doctor-role">General Medicine</div></div>
+    <div class="doctor-card reveal d1"><div class="doctor-avatar">👩‍⚕️</div><div class="doctor-name">Dr. Amina Uwimana</div><div class="doctor-role">Pediatrics</div></div>
+    <div class="doctor-card reveal d2"><div class="doctor-avatar">👨‍⚕️</div><div class="doctor-name">Dr. Eric Habimana</div><div class="doctor-role">Cardiology</div></div>
+  </div>
+</section>
+
+<section class="cta">
+  <p class="cta-tag reveal">Emergency Line</p>
+  <h2 class="cta-title reveal">Need urgent<br><em>medical help?</em></h2>
+  <p class="cta-sub reveal">Our emergency team is available 24 hours a day, 7 days a week. Don't wait — call us now.</p>
+  <a href="tel:+250700000000" class="phone-link reveal">📞 +250 700 000 000</a>
+</section>
+
+<footer>
+  <a href="#" class="footer-logo">Medi<span>Care</span></a>
+  <p class="footer-copy">© 2025 MediCare Clinic · Kigali, Rwanda</p>
+  <a href="https://02-clinic.netlify.app" target="_blank" style="color: #7eb8f7; text-decoration: none; font-size: 12px;">Live Demo ↗</a>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('on')),{threshold:0.1})
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment — Sir Builder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --white: #f4f0e8;
+      --cream: #e8e2d4;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --grey: #2a2a2a;
+      --muted: #888;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-serif: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.35;
+    }
+
+    .payment-container {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      position: relative;
+      z-index: 1;
+    }
+
+    .payment-summary {
+      padding: 60px 40px;
+      background: rgba(201,168,76,0.03);
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .summary-tag {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .summary-title {
+      font-family: var(--font-display);
+      font-size: 40px;
+      letter-spacing: 1px;
+      line-height: 1;
+      margin-bottom: 40px;
+    }
+
+    .summary-item {
+      margin-bottom: 24px;
+    }
+
+    .summary-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .summary-value {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      color: var(--white);
+    }
+
+    .price-total {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .total-amount {
+      font-family: var(--font-display);
+      font-size: 48px;
+      color: var(--gold);
+    }
+
+    .payment-methods {
+      padding: 60px 48px;
+    }
+
+    .method-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .method-tab {
+      flex: 1;
+      padding: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .method-tab.active {
+      background: var(--gold);
+      color: var(--black);
+      border-color: var(--gold);
+    }
+
+    .payment-form {
+      display: none;
+    }
+
+    .payment-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .form-group input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 14px 18px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--gold);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .pay-btn {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      padding: 18px;
+      border: none;
+      font-family: var(--font-body);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+
+    .pay-btn:hover {
+      background: var(--gold-light);
+    }
+
+    .momo-instructions {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .momo-instructions p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .momo-logo {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 800px) {
+      .payment-container {
+        grid-template-columns: 1fr;
+      }
+      .payment-summary {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding: 40px 24px;
+      }
+      .payment-methods {
+        padding: 40px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="payment-container">
+    <div class="payment-summary">
+      <p class="summary-tag">Order Summary</p>
+      <h1 class="summary-title">Checkout</h1>
+
+      <div class="summary-item">
+        <p class="summary-label">Selected Package</p>
+        <p class="summary-value" id="summaryPackage">Standard — $100</p>
+      </div>
+
+      <div class="summary-item">
+        <p class="summary-label">Selected Website</p>
+        <p class="summary-value" id="summaryWebsite">MediCare Clinic</p>
+      </div>
+
+      <div class="price-total">
+        <p class="summary-label">Total to Pay</p>
+        <p class="total-amount" id="summaryPrice">$100</p>
+      </div>
+    </div>
+
+    <div class="payment-methods">
+      <div class="method-tabs">
+        <div class="method-tab active" onclick="showTab('card')">Credit Card</div>
+        <div class="method-tab" onclick="showTab('momo')">MTN MoMo</div>
+        <div class="method-tab" onclick="showTab('airtel')">Airtel Money</div>
+      </div>
+
+      <!-- Card Form -->
+      <div id="cardForm" class="payment-form active">
+        <div class="form-group">
+          <label>Cardholder Name</label>
+          <input type="text" placeholder="John Doe" />
+        </div>
+        <div class="form-group">
+          <label>Card Number</label>
+          <input type="text" placeholder="0000 0000 0000 0000" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Expiry Date</label>
+            <input type="text" placeholder="MM/YY" />
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="text" placeholder="123" />
+          </div>
+        </div>
+        <button class="pay-btn" onclick="completePayment()">Pay Now</button>
+      </div>
+
+      <!-- MoMo Form -->
+      <div id="momoForm" class="payment-form">
+        <div class="momo-instructions">
+          <div class="momo-logo">🟡</div>
+          <p>Enter your MTN Mobile Money number to receive a payment prompt on your phone.</p>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="text" placeholder="078X XXX XXX" />
+        </div>
+        <button class="pay-btn" onclick="completePayment()">Send Prompt</button>
+      </div>
+
+      <!-- Airtel Form -->
+      <div id="airtelForm" class="payment-form">
+        <div class="momo-instructions">
+          <div class="momo-logo">🔴</div>
+          <p>Enter your Airtel Money number to receive a payment prompt on your phone.</p>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="text" placeholder="073X XXX XXX" />
+        </div>
+        <button class="pay-btn" onclick="completePayment()">Send Prompt</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load selection from storage
+    window.addEventListener('load', () => {
+      const pkg = sessionStorage.getItem('selectedPackage') || 'Standard — $100';
+      const web = sessionStorage.getItem('selectedWebsite') || 'MediCare Clinic';
+      const price = pkg.split('—')[1] || '$100';
+
+      document.getElementById('summaryPackage').innerText = pkg;
+      document.getElementById('summaryWebsite').innerText = web;
+      document.getElementById('summaryPrice').innerText = price;
+    });
+
+    function showTab(type) {
+      // Update tabs
+      document.querySelectorAll('.method-tab').forEach(tab => tab.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Update forms
+      document.querySelectorAll('.payment-form').forEach(form => form.classList.remove('active'));
+      document.getElementById(type + 'Form').classList.add('active');
+    }
+
+    function completePayment() {
+      const btn = event.target;
+      const originalText = btn.innerText;
+      btn.innerText = 'Processing...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        alert('Payment Successful! Thank you for your order. We will contact you shortly.');
+        window.location.href = 'index.html';
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

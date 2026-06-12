@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Lumière Studio — Photography Kigali</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,600;1,300&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f9f7f4;--dark:#0d0d0d;--warm:#c4a882;--light:#ede9e2;--muted:#8a8178;--font-h:'Cormorant',serif;--font-b:'Inter',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:var(--font-b);font-weight:300;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:normal;transition:all 0.4s}
+nav.scrolled{background:rgba(249,247,244,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,13,13,0.07)}
+.logo{font-family:var(--font-h);font-size:22px;color:var(--dark);text-decoration:none;font-weight:600;letter-spacing:2px}
+.logo em{font-style:italic;font-weight:300;color:var(--warm)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s}
+.nav-links a:hover{color:var(--dark)}
+.nav-btn{border:1px solid rgba(13,13,13,0.2);color:var(--dark);padding:10px 24px;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;font-family:var(--font-b);transition:all 0.3s}
+.nav-btn:hover{background:var(--dark);color:#fff}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:var(--dark);overflow:hidden}
+.hero-left{padding:160px 64px 80px;display:flex;flex-direction:column;justify-content:center}
+.h-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:rgba(196,168,130,0.7);margin-bottom:32px}
+.h-title{font-family:var(--font-h);font-size:clamp(52px,6vw,80px);line-height:1.05;color:#fff;font-weight:300;margin-bottom:32px}
+.h-title strong{font-weight:600;display:block}
+.h-title em{font-style:italic;color:var(--warm)}
+.h-desc{font-size:14px;line-height:2;color:rgba(255,255,255,0.45);max-width:380px;margin-bottom:56px}
+.h-actions{display:flex;gap:16px}
+.btn-warm{background:var(--warm);color:#fff;padding:16px 36px;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;display:inline-block}
+.btn-warm:hover{background:#b89468}
+.btn-ghost-w{border:1px solid rgba(255,255,255,0.2);color:#fff;padding:16px 36px;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;display:inline-block}
+.btn-ghost-w:hover{border-color:rgba(255,255,255,0.5)}
+.hero-right{display:grid;grid-template-rows:1fr 1fr;gap:2px}
+.hero-img-top{background:linear-gradient(160deg,#2a2318,#1a1510);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative;overflow:hidden}
+.hero-img-top::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(13,13,13,0.5))}
+.hero-img-bottom{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.hero-img-sm{background:linear-gradient(160deg,#1a1510,#0d0d0d);display:flex;align-items:center;justify-content:center;font-size:48px}
+
+/* CATEGORIES */
+.categories{padding:80px 48px;background:var(--bg);display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(13,13,13,0.06);margin:0}
+.cat-item{background:var(--bg);padding:40px 28px;cursor:pointer;transition:background 0.3s;position:relative}
+.cat-item:hover{background:var(--light)}
+.cat-item::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--warm);transform:scaleX(0);transition:transform 0.4s}
+.cat-item:hover::after{transform:scaleX(1)}
+.cat-icon{font-size:28px;margin-bottom:16px}
+.cat-name{font-family:var(--font-h);font-size:20px;margin-bottom:8px}
+.cat-count{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+/* PORTFOLIO */
+.portfolio{padding:120px 48px;background:var(--bg)}
+.p-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:64px}
+.s-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--warm);margin-bottom:16px}
+.s-title{font-family:var(--font-h);font-size:clamp(44px,5vw,64px);line-height:1.05;font-weight:300}
+.s-title em{font-style:italic}
+.see-all{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--warm);text-decoration:none;transition:letter-spacing 0.3s}
+.see-all:hover{letter-spacing:5px}
+.p-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:auto;gap:12px}
+.p-item{overflow:hidden;position:relative;cursor:pointer}
+.p-item:hover .p-overlay{opacity:1}
+.p-item-1{grid-column:span 7;aspect-ratio:4/3}
+.p-item-2{grid-column:span 5;aspect-ratio:3/4}
+.p-item-3{grid-column:span 4;aspect-ratio:1}
+.p-item-4{grid-column:span 4;aspect-ratio:1}
+.p-item-5{grid-column:span 4;aspect-ratio:1}
+.p-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px;transition:transform 0.5s}
+.p-item:hover .p-bg{transform:scale(1.05)}
+.p-i1{background:linear-gradient(135deg,#2a2018,#1a1208)}
+.p-i2{background:linear-gradient(135deg,#1a2028,#101520)}
+.p-i3{background:linear-gradient(135deg,#202818,#141c10)}
+.p-i4{background:linear-gradient(135deg,#281820,#1a1015)}
+.p-i5{background:linear-gradient(135deg,#201818,#141010)}
+.p-overlay{position:absolute;inset:0;background:rgba(13,13,13,0.6);opacity:0;transition:opacity 0.4s;display:flex;align-items:flex-end;padding:24px}
+.p-label{font-family:var(--font-h);font-size:18px;color:#fff;font-weight:300;font-style:italic}
+
+/* PROCESS */
+.process{padding:80px 48px 120px;background:var(--light)}
+.proc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(13,13,13,0.08);margin-top:64px}
+.proc-step{background:var(--light);padding:48px 32px}
+.proc-num{font-family:var(--font-h);font-size:64px;color:rgba(196,168,130,0.6);line-height:1;font-weight:600;margin-bottom:20px}
+.proc-name{font-family:var(--font-h);font-size:22px;margin-bottom:12px}
+.proc-desc{font-size:13px;line-height:1.8;color:var(--muted)}
+
+/* PRICING */
+.pricing{padding:80px 48px 120px;background:var(--bg)}
+.p-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px}
+.price-card{background:var(--light);padding:48px 36px}
+.price-type{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.price-val{font-family:var(--font-h);font-size:56px;font-weight:600;line-height:1;margin-bottom:8px}
+.price-note{font-size:12px;color:var(--muted);margin-bottom:32px}
+.price-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:40px}
+.price-list li{font-size:13px;color:var(--muted);display:flex;gap:10px}
+.price-list li::before{content:'·';color:var(--warm);font-size:20px;line-height:1}
+.price-link{display:block;text-align:center;padding:14px;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;border:1px solid rgba(13,13,13,0.15);color:var(--dark)}
+.price-link:hover{background:var(--dark);color:#fff;border-color:var(--dark)}
+
+/* CTA */
+.cta{padding:100px 48px;background:var(--dark);text-align:center}
+.cta-title{font-family:var(--font-h);font-size:clamp(48px,7vw,88px);color:#fff;line-height:1;font-weight:300;margin:16px 0 40px}
+.cta-title em{font-style:italic;color:var(--warm)}
+footer{padding:32px 48px;border-top:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;background:var(--dark)}
+.fl{font-family:var(--font-h);font-size:18px;color:#fff;text-decoration:none;font-weight:600}
+.fl em{font-style:italic;font-weight:300;color:var(--warm)}
+.fc{font-size:11px;color:rgba(255,255,255,0.3)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s,transform 0.8s}.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media(max-width:900px){nav{padding:16px 24px}.nav-links{display:none}.hero{grid-template-columns:1fr;min-height:auto}.hero-left{padding:120px 24px 48px}.hero-right{height:320px}.categories{grid-template-columns:repeat(2,1fr);padding:0;margin:0}.portfolio,.process,.pricing{padding:80px 24px}.p-grid{grid-template-columns:1fr 1fr}.p-item-1,.p-item-2{grid-column:span 2}.p-item-3,.p-item-4,.p-item-5{grid-column:span 1}.p-overlay{opacity:1}.proc-steps,.p-cards{grid-template-columns:1fr}.cta{padding:80px 24px}footer{flex-direction:column;gap:16px;padding:24px;text-align:center}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="#" class="logo">Lumière <em>Studio</em></a>
+  <ul class="nav-links"><li><a href="#portfolio">Portfolio</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#cta">Book</a></li></ul>
+  <a href="#cta" class="nav-btn">Book a Session</a>
+</nav>
+<section class="hero">
+  <div class="hero-left">
+    <p class="h-tag">Photography & Videography · Kigali</p>
+    <h1 class="h-title"><strong>We Capture</strong>Your Most<br><em>Precious Moments.</em></h1>
+    <p class="h-desc">Professional photography for weddings, portraits, corporate events, and everything in between. Timeless images, authentic stories.</p>
+    <div class="h-actions"><a href="#portfolio" class="btn-warm">View Portfolio</a><a href="#cta" class="btn-ghost-w">Book Now</a></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-top"><div>📸</div></div>
+    <div class="hero-img-bottom"><div class="hero-img-sm">💍</div><div class="hero-img-sm">🎉</div></div>
+  </div>
+</section>
+<div style="background:rgba(13,13,13,0.06)">
+<div class="categories">
+  <div class="cat-item"><div class="cat-icon">💒</div><div class="cat-name">Weddings</div><div class="cat-count">120+ sessions</div></div>
+  <div class="cat-item"><div class="cat-icon">👤</div><div class="cat-name">Portraits</div><div class="cat-count">200+ sessions</div></div>
+  <div class="cat-item"><div class="cat-icon">🏢</div><div class="cat-name">Corporate</div><div class="cat-count">80+ clients</div></div>
+  <div class="cat-item"><div class="cat-icon">🎊</div><div class="cat-name">Events</div><div class="cat-count">300+ events</div></div>
+</div>
+</div>
+<section class="portfolio" id="portfolio">
+  <div class="p-header">
+    <div><p class="s-tag reveal">Selected Work</p><h2 class="s-title reveal">Our <em>Portfolio</em></h2></div>
+    <a href="#" class="see-all reveal">View All →</a>
+  </div>
+  <div class="p-grid">
+    <div class="p-item p-item-1 reveal"><div class="p-bg p-i1">💒</div><div class="p-overlay"><span class="p-label">Wedding · Kiyovu</span></div></div>
+    <div class="p-item p-item-2 reveal d1"><div class="p-bg p-i2">👤</div><div class="p-overlay"><span class="p-label">Portrait Session</span></div></div>
+    <div class="p-item p-item-3 reveal"><div class="p-bg p-i3">🌿</div><div class="p-overlay"><span class="p-label">Nature & Lifestyle</span></div></div>
+    <div class="p-item p-item-4 reveal d1"><div class="p-bg p-i4">🎉</div><div class="p-overlay"><span class="p-label">Corporate Event</span></div></div>
+    <div class="p-item p-item-5 reveal d2"><div class="p-bg p-i5">👶</div><div class="p-overlay"><span class="p-label">Family Portrait</span></div></div>
+  </div>
+</section>
+<section class="process">
+  <p class="s-tag reveal">How It Works</p>
+  <h2 class="s-title reveal">Simple &amp; <em>Seamless</em></h2>
+  <div class="proc-steps">
+    <div class="proc-step reveal"><div class="proc-num">01</div><div class="proc-name">Book Online</div><p class="proc-desc">Choose your package, pick a date, and confirm via WhatsApp or our contact form. Quick and easy.</p></div>
+    <div class="proc-step reveal d1"><div class="proc-num">02</div><div class="proc-name">Pre-Shoot Call</div><p class="proc-desc">We discuss your vision, location preferences, outfit ideas, and everything needed to plan the perfect shoot.</p></div>
+    <div class="proc-step reveal d2"><div class="proc-num">03</div><div class="proc-name">The Shoot</div><p class="proc-desc">We arrive on time, create a relaxed atmosphere, and capture every moment with professional precision.</p></div>
+    <div class="proc-step reveal d3"><div class="proc-num">04</div><div class="proc-name">Delivery</div><p class="proc-desc">Edited, gallery-ready images delivered within 7 days via a private online gallery link.</p></div>
+  </div>
+</section>
+<section class="pricing" id="pricing">
+  <p class="s-tag reveal">Packages</p>
+  <h2 class="s-title reveal">Invest in <em>Memories</em></h2>
+  <div class="p-cards">
+    <div class="price-card reveal"><div class="price-type">Portrait Session</div><div class="price-val">RWF 80K</div><div class="price-note">1–2 hours</div><ul class="price-list"><li>1 location</li><li>50 edited photos</li><li>Online gallery</li><li>1-week delivery</li></ul><a href="#cta" class="price-link">Book This</a></div>
+    <div class="price-card reveal d1" style="background:var(--dark);color:#fff"><div class="price-type" style="color:rgba(255,255,255,0.4)">Wedding Package</div><div class="price-val" style="color:var(--warm)">RWF 450K</div><div class="price-note" style="color:rgba(255,255,255,0.4)">Full day coverage</div><ul class="price-list" style="--warm:#c4a882"><li style="color:rgba(255,255,255,0.6)">Full day (8–10 hrs)</li><li style="color:rgba(255,255,255,0.6)">300+ edited photos</li><li style="color:rgba(255,255,255,0.6)">Highlight video</li><li style="color:rgba(255,255,255,0.6)">2 photographers</li><li style="color:rgba(255,255,255,0.6)">Premium album</li></ul><a href="#cta" class="price-link" style="border-color:rgba(255,255,255,0.2);color:#fff">Book This</a></div>
+    <div class="price-card reveal d2"><div class="price-type">Corporate Event</div><div class="price-val">RWF 200K</div><div class="price-note">Half day</div><ul class="price-list"><li>4 hours coverage</li><li>150 edited photos</li><li>Commercial license</li><li>3-day delivery</li></ul><a href="#cta" class="price-link">Book This</a></div>
+  </div>
+</section>
+<section class="cta" id="cta">
+  <p class="s-tag reveal" style="color:rgba(196,168,130,0.7);text-align:center">Ready to shoot?</p>
+  <h2 class="cta-title reveal">Let's create<br><em>magic together.</em></h2>
+  <p style="color:rgba(255,255,255,0.4);font-size:14px;max-width:420px;margin:0 auto 48px;line-height:1.9" class="reveal">Reach out via WhatsApp to discuss your vision, check availability, and lock in your date.</p>
+  <a href="https://wa.me/250700000000" class="btn-warm reveal">WhatsApp Us 📷</a>
+</section>
+<footer>
+  <a href="#" class="fl">Lumière <em>Studio</em></a>
+  <p class="fc">© 2025 Lumière Studio · Kigali, Rwanda</p>
+  <a href="https://07-photography.netlify.app" target="_blank" style="color: var(--warm); text-decoration: none; font-size: 12px; font-weight: 700;">Live Demo ↗</a>
+</footer>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60))
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('on')),{threshold:0.1})
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>

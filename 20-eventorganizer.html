@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Vivid Events — Event Organizer Kigali</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Karla:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#faf8f5;--dark:#12080a;--magenta:#c0274a;--gold:#d4a830;--light:#fceef2;--muted:#8a6870;--font-h:'Abril Fatface',serif;--font-b:'Karla',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:var(--font-b);font-weight:300;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;transition:all 0.4s}
+nav.scrolled{background:rgba(250,248,245,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(18,8,10,0.07)}
+.logo{font-family:var(--font-h);font-size:22px;color:var(--dark);text-decoration:none;letter-spacing:1px}
+.logo span{color:var(--magenta)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:13px;transition:color 0.3s}
+.nav-links a:hover{color:var(--dark)}
+.nav-btn{background:var(--magenta);color:#fff;padding:10px 26px;font-size:12px;font-weight:700;text-decoration:none;font-family:var(--font-b);transition:all 0.3s}
+.nav-btn:hover{background:#a01f3c}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--dark);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:0 64px 80px}
+.hero-circles{position:absolute;inset:0;pointer-events:none}
+.hc{position:absolute;border-radius:50%;border:1px solid rgba(192,39,74,0.15)}
+.hc1{width:600px;height:600px;top:-200px;right:-100px}
+.hc2{width:400px;height:400px;top:100px;right:100px;border-color:rgba(212,168,48,0.1)}
+.hc3{width:200px;height:200px;top:250px;right:250px;border-color:rgba(192,39,74,0.2)}
+.hero-content{position:relative;z-index:2;max-width:720px}
+.h-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:rgba(192,39,74,0.7);margin-bottom:24px}
+.h-title{font-family:var(--font-h);font-size:clamp(56px,9vw,112px);line-height:0.9;color:#fff;margin-bottom:28px}
+.h-title em{color:var(--magenta)}
+.h-desc{font-size:16px;line-height:1.8;color:rgba(255,255,255,0.5);max-width:520px;margin-bottom:48px}
+.h-actions{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.btn-mag{background:var(--magenta);color:#fff;padding:18px 40px;font-size:12px;font-weight:700;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;display:inline-block}
+.btn-mag:hover{background:#a01f3c}
+.btn-ghost{border:1px solid rgba(255,255,255,0.2);color:#fff;padding:18px 40px;font-size:12px;text-decoration:none;font-family:var(--font-b);transition:all 0.3s;display:inline-block}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.5)}
+.h-counter{position:absolute;right:64px;bottom:80px;text-align:right}
+.hc-num{font-family:var(--font-h);font-size:80px;color:rgba(255,255,255,0.6);line-height:1}
+.hc-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.6)}
+
+/* TICKER */
+.ticker{background:var(--magenta);padding:14px 0;overflow:hidden;white-space:nowrap}
+.ticker-inner{display:inline-flex;gap:56px;animation:scroll 20s linear infinite}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#fff;flex-shrink:0;font-weight:700}
+.tick-star{color:rgba(255,255,255,0.4)}
+
+/* EVENTS */
+.events{padding:100px 48px;background:var(--bg)}
+.s-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--magenta);margin-bottom:16px}
+.s-title{font-family:var(--font-h);font-size:clamp(44px,5.5vw,68px);line-height:1;margin-bottom:64px}
+.s-title em{color:var(--magenta)}
+.event-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.event-card{overflow:hidden;background:#fff;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer}
+.event-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(18,8,10,0.1)}
+.event-img{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:72px;position:relative}
+.ei-1{background:linear-gradient(135deg,#f0c8d4,#e8a8bc)}
+.ei-2{background:linear-gradient(135deg,#c8d8f0,#a8bce8)}
+.ei-3{background:linear-gradient(135deg,#f0e8c8,#e8d4a8)}
+.ei-4{background:linear-gradient(135deg,#d4c8f0,#bca8e8)}
+.ei-5{background:linear-gradient(135deg,#c8f0d4,#a8e8bc)}
+.ei-6{background:linear-gradient(135deg,#f0d4c8,#e8bca8)}
+.event-badge{position:absolute;top:16px;left:16px;background:var(--magenta);color:#fff;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;font-weight:700}
+.event-info{padding:24px}
+.event-type{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--magenta);margin-bottom:8px}
+.event-name{font-family:var(--font-h);font-size:20px;margin-bottom:10px}
+.event-desc{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* PROCESS */
+.process{padding:80px 48px 100px;background:var(--light)}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(18,8,10,0.06);margin-top:64px}
+.proc{background:var(--light);padding:44px 32px}
+.proc-n{font-family:var(--font-h);font-size:56px;color:rgba(192,39,74,0.5);line-height:1;margin-bottom:16px}
+.proc-t{font-family:var(--font-h);font-size:20px;margin-bottom:10px}
+.proc-d{font-size:13px;line-height:1.8;color:var(--muted)}
+
+/* PACKAGES */
+.packages{padding:80px 48px 100px;background:var(--bg)}
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(18,8,10,0.06);margin-top:64px}
+.pkg{background:var(--bg);padding:48px 36px}
+.pkg.hot{background:var(--dark)}
+.pkg-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.pkg.hot .pkg-label{color:rgba(255,255,255,0.3)}
+.pkg-name{font-family:var(--font-h);font-size:28px;margin-bottom:8px}
+.pkg.hot .pkg-name{color:#fff}
+.pkg-desc{font-size:13px;line-height:1.8;color:var(--muted);margin-bottom:32px}
+.pkg.hot .pkg-desc{color:rgba(255,255,255,0.4)}
+.pkg-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:40px}
+.pkg-list li{font-size:13px;color:var(--muted);display:flex;gap:10px}
+.pkg.hot .pkg-list li{color:rgba(255,255,255,0.6)}
+.pkg-list li::before{content:'✓';color:var(--magenta);flex-shrink:0}
+.pkg-btn{display:block;text-align:center;padding:14px;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;font-family:var(--font-b);font-weight:700;transition:all 0.3s;border:1px solid rgba(18,8,10,0.15);color:var(--dark)}
+.pkg-btn:hover{background:var(--dark);color:#fff;border-color:var(--dark)}
+.pkg-btn-fill{background:var(--magenta);color:#fff;border-color:var(--magenta)}
+.pkg-btn-fill:hover{background:#a01f3c;border-color:#a01f3c}
+
+/* CTA */
+.cta{padding:100px 48px;background:var(--dark);text-align:center;position:relative;overflow:hidden}
+.cta::before{content:'✦';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:600px;color:rgba(192,39,74,0.03);pointer-events:none;line-height:1}
+.cta-title{font-family:var(--font-h);font-size:clamp(52px,8vw,100px);color:#fff;line-height:0.95;margin:16px 0 40px;position:relative}
+.cta-title em{color:var(--magenta)}
+
+footer{padding:32px 48px;background:#080308;display:flex;align-items:center;justify-content:space-between}
+.fl{font-family:var(--font-h);font-size:18px;color:#fff;text-decoration:none}.fl span{color:var(--magenta)}
+.fc{font-size:12px;color:rgba(255,255,255,0.25)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s,transform 0.8s}.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media(max-width:900px){nav{padding:16px 24px}.nav-links{display:none}.hero{padding:0 24px 60px}.h-counter{display:none}.events,.process,.packages{padding:80px 24px}.event-grid,.proc-grid,.pkg-grid{grid-template-columns:1fr}.cta{padding:80px 24px}footer{flex-direction:column;gap:16px;padding:24px;text-align:center}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="#" class="logo">Vivid<span>Events</span></a>
+  <ul class="nav-links"><li><a href="#events">Events</a></li><li><a href="#packages">Packages</a></li><li><a href="#cta">Plan</a></li></ul>
+  <a href="#cta" class="nav-btn">Plan My Event</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-circles"><div class="hc hc1"></div><div class="hc hc2"></div><div class="hc hc3"></div></div>
+  <div class="hero-content">
+    <p class="h-tag">Event Management · Kigali, Rwanda</p>
+    <h1 class="h-title">We Make<br>Events<br><em>Unforgettable.</em></h1>
+    <p class="h-desc">From corporate galas to intimate weddings, birthday bashes to product launches — we design and execute events that people talk about for years.</p>
+    <div class="h-actions"><a href="#packages" class="btn-mag">View Packages</a><a href="#events" class="btn-ghost">Our Events</a></div>
+  </div>
+  <div class="h-counter"><div class="hc-num">500+</div><div class="hc-label">Events Delivered</div></div>
+</section>
+
+<div class="ticker"><div class="ticker-inner">
+  <span class="tick-item">Corporate Events</span><span class="tick-star">✦</span>
+  <span class="tick-item">Weddings</span><span class="tick-star">✦</span>
+  <span class="tick-item">Concerts & Shows</span><span class="tick-star">✦</span>
+  <span class="tick-item">Product Launches</span><span class="tick-star">✦</span>
+  <span class="tick-item">Gala Dinners</span><span class="tick-star">✦</span>
+  <span class="tick-item">Birthday Parties</span><span class="tick-star">✦</span>
+  <span class="tick-item">Conferences</span><span class="tick-star">✦</span>
+  <span class="tick-item">Corporate Events</span><span class="tick-star">✦</span>
+  <span class="tick-item">Weddings</span><span class="tick-star">✦</span>
+  <span class="tick-item">Concerts & Shows</span><span class="tick-star">✦</span>
+  <span class="tick-item">Product Launches</span><span class="tick-star">✦</span>
+</div></div>
+
+<section class="events" id="events">
+  <p class="s-tag reveal">What We Organise</p>
+  <h2 class="s-title reveal">Every Event,<br><em>Perfectly Executed.</em></h2>
+  <div class="event-grid">
+    <div class="event-card reveal"><div class="event-img ei-1"><span class="event-badge">Popular</span>💒</div><div class="event-info"><div class="event-type">Weddings</div><div class="event-name">Wedding Planning & Management</div><p class="event-desc">Full-service wedding coordination — venue, décor, catering, entertainment, and day management.</p></div></div>
+    <div class="event-card reveal d1"><div class="event-img ei-2">🏢</div><div class="event-info"><div class="event-type">Corporate</div><div class="event-name">Corporate Events & Conferences</div><p class="event-desc">Team buildings, award galas, product launches, AGMs, and international conferences.</p></div></div>
+    <div class="event-card reveal d2"><div class="event-img ei-3">🎂</div><div class="event-info"><div class="event-type">Private Parties</div><div class="event-name">Birthdays & Celebrations</div><p class="event-desc">Milestone birthdays, anniversaries, baby showers, and graduation parties styled to perfection.</p></div></div>
+    <div class="event-card reveal"><div class="event-img ei-4">🎤</div><div class="event-info"><div class="event-type">Entertainment</div><div class="event-name">Concerts & Live Shows</div><p class="event-desc">Artist booking, stage production, sound and lighting, crowd management, and full show production.</p></div></div>
+    <div class="event-card reveal d1"><div class="event-img ei-5">🚀</div><div class="event-info"><div class="event-type">Brand Events</div><div class="event-name">Product Launches & Activations</div><p class="event-desc">Brand activations, pop-up experiences, and launch events that make noise in the market.</p></div></div>
+    <div class="event-card reveal d2"><div class="event-img ei-6">🍽️</div><div class="event-info"><div class="event-type">Dining</div><div class="event-name">Gala Dinners & Fundraisers</div><p class="event-desc">Elegant gala evenings, fundraising dinners, and charity events with immaculate execution.</p></div></div>
+  </div>
+</section>
+
+<section class="process">
+  <p class="s-tag reveal">How It Works</p>
+  <h2 class="s-title reveal">From Vision<br>to <em>Reality</em></h2>
+  <div class="proc-grid">
+    <div class="proc reveal"><div class="proc-n">01</div><div class="proc-t">Discovery Call</div><p class="proc-d">We learn your vision, date, guest count, and budget to start building your event concept.</p></div>
+    <div class="proc reveal d1"><div class="proc-n">02</div><div class="proc-t">Concept & Proposal</div><p class="proc-d">We present a full event concept, vendor recommendations, timeline, and detailed budget breakdown.</p></div>
+    <div class="proc reveal d2"><div class="proc-n">03</div><div class="proc-t">Planning & Coordination</div><p class="proc-d">We handle all vendors, logistics, permits, rehearsals, and every detail so you don't have to.</p></div>
+    <div class="proc reveal d3"><div class="proc-n">04</div><div class="proc-t">Event Day</div><p class="proc-d">Our on-site team manages everything on the day — you simply arrive and enjoy every moment.</p></div>
+  </div>
+</section>
+
+<section class="packages" id="packages">
+  <p class="s-tag reveal">Packages</p>
+  <h2 class="s-title reveal">Tailored for Every <em>Scale</em></h2>
+  <div class="pkg-grid">
+    <div class="pkg reveal">
+      <div class="pkg-label">Intimate Events</div>
+      <div class="pkg-name">Essential</div>
+      <p class="pkg-desc">For events under 100 guests that need professional coordination without the full-service price tag.</p>
+      <ul class="pkg-list"><li>Day-of coordination</li><li>Vendor sourcing</li><li>Timeline management</li><li>On-site team (2 staff)</li></ul>
+      <a href="#cta" class="pkg-btn">Get Quote</a>
+    </div>
+    <div class="pkg hot reveal d1">
+      <div class="pkg-label">Most Popular</div>
+      <div class="pkg-name">Signature</div>
+      <p class="pkg-desc">Our most popular package — full planning, design, and management for events of 100–500 guests.</p>
+      <ul class="pkg-list"><li>Full event planning</li><li>Concept & design</li><li>Vendor management</li><li>Décor & styling</li><li>Full on-site team</li></ul>
+      <a href="#cta" class="pkg-btn pkg-btn-fill">Get Quote</a>
+    </div>
+    <div class="pkg reveal d2">
+      <div class="pkg-label">Large Scale</div>
+      <div class="pkg-name">Grand</div>
+      <p class="pkg-desc">Major events — concerts, conferences, galas — with 500+ guests and full production capabilities.</p>
+      <ul class="pkg-list"><li>Everything in Signature</li><li>Stage & AV production</li><li>Security coordination</li><li>Media & press management</li><li>Post-event reporting</li></ul>
+      <a href="#cta" class="pkg-btn">Get Quote</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <p class="s-tag reveal" style="color:rgba(192,39,74,0.7);text-align:center">Free Consultation</p>
+  <h2 class="cta-title reveal">Let's plan<br>your next <em>event.</em></h2>
+  <p style="color:rgba(255,255,255,0.4);font-size:15px;max-width:440px;margin:0 auto 48px;line-height:1.8;position:relative" class="reveal">Tell us your event date, type, and rough guest count — we'll call you back within 24 hours with ideas and pricing.</p>
+  <a href="https://wa.me/250700000000" class="btn-mag reveal" style="position:relative">Start Planning 🎉</a>
+</section>
+
+<footer>
+  <a href="#" class="fl">Vivid<span>Events</span></a>
+  <p class="fc">© 2025 Vivid Events · Kigali, Rwanda</p>
+  <a href="https://20-eventorganizer.netlify.app" target="_blank" style="color: var(--magenta); text-decoration: none; font-size: 12px; font-weight: 700;">Live Demo ↗</a>
+</footer>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60))
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('on')),{threshold:0.1})
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>

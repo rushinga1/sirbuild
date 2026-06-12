@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeForge Bootcamp — Launch Your Tech Career</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080b12;
+    --surface: #0f1420;
+    --card: #141925;
+    --neon: #00f5a0;
+    --neon2: #00d4ff;
+    --orange: #ff6b35;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --border: #1e2535;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* GRID OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,160,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(8,11,18,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.2rem;
+    color: var(--neon);
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--text); }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav a { text-decoration: none; color: var(--muted); font-size: 0.9rem; transition: color .2s; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+  nav a:hover { color: var(--neon); }
+  .nav-cta {
+    background: var(--neon);
+    color: var(--bg) !important;
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 60px 80px;
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,245,160,0.12) 0%, transparent 70%);
+    top: 10%; right: -100px;
+    pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+    bottom: 10%; left: 20%;
+    pointer-events: none;
+  }
+  .hero-content { max-width: 700px; position: relative; z-index: 1; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,245,160,0.1);
+    border: 1px solid rgba(0,245,160,0.3);
+    color: var(--neon);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .badge::before { content: '▶'; font-size: 0.6rem; }
+  h1 {
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+  h1 .accent { color: var(--neon); }
+  h1 .accent2 {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--neon2);
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.6s ease 0.2s both;
+    font-weight: 400;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--neon);
+    color: var(--bg);
+    padding: 16px 36px;
+    border-radius: 4px;
+    font-weight: 800;
+    font-size: 1rem;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 0 30px rgba(0,245,160,0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(0,245,160,0.5);
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: color .2s;
+  }
+  .btn-ghost:hover { color: var(--neon); }
+  .play-icon {
+    width: 40px; height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+  }
+
+  /* STATS */
+  .stats-strip {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    padding: 32px 60px;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.2rem;
+    color: var(--neon);
+    font-weight: 700;
+    display: block;
+  }
+  .stat-label { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* COURSES */
+  .section { padding: 100px 60px; position: relative; z-index: 1; }
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 60px;
+    letter-spacing: -0.02em;
+  }
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .course-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s, transform .3s;
+    cursor: pointer;
+  }
+  .course-card:hover {
+    border-color: var(--neon);
+    transform: translateY(-4px);
+  }
+  .course-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--neon), var(--neon2));
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .course-card:hover::before { opacity: 1; }
+  .course-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .course-level {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--orange);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .course-card h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .course-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 24px; }
+  .course-meta { display: flex; justify-content: space-between; align-items: center; }
+  .course-duration { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--muted); }
+  .course-price { color: var(--neon); font-weight: 800; font-size: 1.1rem; }
+  .featured-card {
+    background: linear-gradient(135deg, rgba(0,245,160,0.08), rgba(0,212,255,0.05));
+    border-color: rgba(0,245,160,0.3);
+  }
+
+  /* HOW IT WORKS */
+  .how-section { background: var(--surface); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; }
+  .step {
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .step:last-child { border-right: none; }
+  .step-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: rgba(0,245,160,0.5);
+    display: block;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .step h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; }
+  .step p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .tcard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .tcard-quote { font-size: 1.8rem; color: var(--neon); margin-bottom: 16px; line-height: 1; }
+  .tcard p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 24px; }
+  .tcard-author { display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .author-info strong { display: block; font-size: 0.95rem; }
+  .author-info span { color: var(--muted); font-size: 0.8rem; }
+  .salary-bump {
+    background: rgba(0,245,160,0.1);
+    border: 1px solid rgba(0,245,160,0.2);
+    color: var(--neon);
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    margin-top: 8px;
+    display: inline-block;
+  }
+
+  /* PRICING */
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 960px; margin: 0 auto; }
+  .pricing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px 36px;
+    text-align: center;
+    transition: transform .3s;
+  }
+  .pricing-card:hover { transform: translateY(-4px); }
+  .pricing-card.popular {
+    border-color: var(--neon);
+    background: linear-gradient(135deg, rgba(0,245,160,0.07), rgba(0,0,0,0));
+    position: relative;
+  }
+  .popular-tag {
+    position: absolute;
+    top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--neon);
+    color: var(--bg);
+    padding: 4px 20px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+  .plan-name { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 16px; }
+  .plan-price { font-family: 'Space Mono', monospace; font-size: 3rem; font-weight: 700; color: var(--text); line-height: 1; }
+  .plan-price sup { font-size: 1.5rem; vertical-align: top; padding-top: 8px; }
+  .plan-period { color: var(--muted); font-size: 0.85rem; margin: 8px 0 28px; }
+  .plan-features { list-style: none; text-align: left; margin-bottom: 32px; }
+  .plan-features li { padding: 10px 0; border-bottom: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; display: flex; gap: 10px; }
+  .plan-features li::before { content: '✓'; color: var(--neon); font-weight: 700; flex-shrink: 0; }
+  .btn-plan {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: 2px solid var(--neon);
+    background: transparent;
+    color: var(--neon);
+    font-family: 'Syne', sans-serif;
+    transition: background .2s, color .2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-plan.filled { background: var(--neon); color: var(--bg); }
+  .btn-plan:hover { background: var(--neon); color: var(--bg); }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, rgba(0,245,160,0.08), rgba(0,212,255,0.05));
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 100px 60px;
+  }
+  .cta-section h2 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; margin-bottom: 20px; letter-spacing: -0.03em; }
+  .cta-section p { color: var(--muted); font-size: 1.1rem; margin-bottom: 40px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  footer p { color: var(--muted); font-size: 0.85rem; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .hero, .section, .cta-section { padding-left: 24px; padding-right: 24px; }
+    .stats-strip { padding: 24px; }
+    .step { border-right: none; border-bottom: 1px solid var(--border); }
+    footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Code<span>Forge</span></div>
+  <ul>
+    <li><a href="#">Courses</a></li>
+    <li><a href="#">Bootcamp</a></li>
+    <li><a href="#">Outcomes</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#" class="nav-cta">Enroll Now</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="badge">Cohort 12 — Open Enrollment</div>
+    <h1>
+      Build<br>
+      <span class="accent">real skills.</span><br>
+      Land <span class="accent2">real jobs.</span>
+    </h1>
+    <p class="hero-sub">
+      Intensive 12-week bootcamp that takes you from zero to full-stack developer — with live mentors, real projects, and a job guarantee that actually means something.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Start Your Journey →</a>
+      <a href="#" class="btn-ghost">
+        <span class="play-icon">▶</span>
+        Watch Demo
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat"><span class="stat-num">94%</span><span class="stat-label">Job Placement Rate</span></div>
+  <div class="stat"><span class="stat-num">2,400+</span><span class="stat-label">Graduates Hired</span></div>
+  <div class="stat"><span class="stat-num">$78k</span><span class="stat-label">Avg. Starting Salary</span></div>
+  <div class="stat"><span class="stat-num">12 wks</span><span class="stat-label">To Career-Ready</span></div>
+</div>
+
+<section class="section">
+  <span class="section-tag">// what we teach</span>
+  <h2 class="section-title">Choose Your Track</h2>
+  <div class="courses-grid">
+    <div class="course-card featured-card">
+      <span class="course-icon">⚡</span>
+      <div class="course-level">Most Popular</div>
+      <h3>Full-Stack Web Dev</h3>
+      <p>Master React, Node.js, PostgreSQL and everything in between. Build production-grade apps that get you hired.</p>
+      <div class="course-meta">
+        <span class="course-duration">12 weeks · Live + Async</span>
+        <span class="course-price">$4,500</span>
+      </div>
+    </div>
+    <div class="course-card">
+      <span class="course-icon">🤖</span>
+      <div class="course-level">Hot Demand</div>
+      <h3>AI / ML Engineering</h3>
+      <p>Python, TensorFlow, LLM APIs and deployment. Build intelligent systems companies are desperately hiring for.</p>
+      <div class="course-meta">
+        <span class="course-duration">16 weeks · Live + Async</span>
+        <span class="course-price">$5,800</span>
+      </div>
+    </div>
+    <div class="course-card">
+      <span class="course-icon">📱</span>
+      <div class="course-level">High Salary</div>
+      <h3>Mobile Dev (React Native)</h3>
+      <p>Ship iOS and Android apps from a single codebase. From UI to App Store — we cover the entire journey.</p>
+      <div class="course-meta">
+        <span class="course-duration">10 weeks · Live + Async</span>
+        <span class="course-price">$4,200</span>
+      </div>
+    </div>
+    <div class="course-card">
+      <span class="course-icon">☁️</span>
+      <div class="course-level">Enterprise Ready</div>
+      <h3>Cloud & DevOps</h3>
+      <p>AWS, Docker, Kubernetes, CI/CD pipelines. Become the engineer every team needs but can't find.</p>
+      <div class="course-meta">
+        <span class="course-duration">8 weeks · Live + Async</span>
+        <span class="course-price">$3,900</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section how-section">
+  <span class="section-tag">// the process</span>
+  <h2 class="section-title">How It Works</h2>
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">01</span>
+      <h3>Apply & Get Matched</h3>
+      <p>15-minute intake call to find your perfect track and cohort schedule.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">02</span>
+      <h3>Learn With Mentors</h3>
+      <p>Daily live sessions, code reviews, and 1-on-1 mentoring from senior engineers.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">03</span>
+      <h3>Build Real Projects</h3>
+      <p>Portfolio projects that solve real problems — not toy tutorials.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">04</span>
+      <h3>Get Hired</h3>
+      <p>Career coaching, interview prep, and direct intro to our 300+ hiring partners.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <span class="section-tag">// outcomes</span>
+  <h2 class="section-title">From Our Graduates</h2>
+  <div class="testimonials-grid">
+    <div class="tcard">
+      <div class="tcard-quote">"</div>
+      <p>I went from warehouse worker to junior developer in 4 months. The mentors pushed me harder than I ever pushed myself — and it was worth every exhausting session.</p>
+      <div class="tcard-author">
+        <div class="avatar" style="background:rgba(0,245,160,0.15);color:var(--neon)">AK</div>
+        <div class="author-info">
+          <strong>Amara K.</strong>
+          <span>Frontend Dev @ Stripe</span>
+          <div class="salary-bump">+$54k salary increase</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-quote">"</div>
+      <p>The projects in my portfolio got me 3 offers in the first week of job hunting. CodeForge's curriculum is tuned to exactly what employers want right now.</p>
+      <div class="tcard-author">
+        <div class="avatar" style="background:rgba(0,212,255,0.15);color:var(--neon2)">JM</div>
+        <div class="author-info">
+          <strong>James M.</strong>
+          <span>Full-Stack Dev @ Shopify</span>
+          <div class="salary-bump">$82k starting salary</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-quote">"</div>
+      <p>The job guarantee gave me the confidence to quit my old job and commit fully. Six months later I'm doing ML work I genuinely love.</p>
+      <div class="tcard-author">
+        <div class="avatar" style="background:rgba(255,107,53,0.15);color:var(--orange)">SL</div>
+        <div class="author-info">
+          <strong>Sofia L.</strong>
+          <span>ML Engineer @ Anthropic</span>
+          <div class="salary-bump">+$71k salary increase</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <span class="section-tag">// pricing</span>
+  <h2 class="section-title" style="text-align:center">Simple, Transparent Pricing</h2>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="plan-name">Self-Paced</div>
+      <div class="plan-price"><sup>$</sup>997</div>
+      <div class="plan-period">one-time</div>
+      <ul class="plan-features">
+        <li>All video curriculum access</li>
+        <li>Community forum</li>
+        <li>Project feedback (async)</li>
+        <li>Certificate of completion</li>
+      </ul>
+      <button class="btn-plan">Get Started</button>
+    </div>
+    <div class="pricing-card popular">
+      <div class="popular-tag">MOST POPULAR</div>
+      <div class="plan-name">Bootcamp Cohort</div>
+      <div class="plan-price"><sup>$</sup>4,500</div>
+      <div class="plan-period">or $450/mo for 12 months</div>
+      <ul class="plan-features">
+        <li>Everything in Self-Paced</li>
+        <li>Live daily sessions</li>
+        <li>1-on-1 mentorship (weekly)</li>
+        <li>Career coaching & job prep</li>
+        <li>Job guarantee</li>
+      </ul>
+      <button class="btn-plan filled">Enroll Now</button>
+    </div>
+    <div class="pricing-card">
+      <div class="plan-name">Corporate</div>
+      <div class="plan-price">Custom</div>
+      <div class="plan-period">for teams of 5+</div>
+      <ul class="plan-features">
+        <li>Everything in Bootcamp</li>
+        <li>Custom curriculum</li>
+        <li>Dedicated instructor</li>
+        <li>Progress reporting dashboard</li>
+      </ul>
+      <button class="btn-plan">Contact Us</button>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Your career starts<br><span style="color:var(--neon)">next cohort.</span></h2>
+  <p>Spots are limited to 30 students per cohort. Applications close Jan 15.</p>
+  <a href="#" class="btn-primary">Apply Now — It's Free →</a>
+</section>
+
+<footer>
+  <div class="logo">Code<span>Forge</span></div>
+  <p>© 2025 CodeForge Bootcamp. All rights reserved.</p>
+  <p><a href="https://01-bootcamp.netlify.app" target="_blank" style="color: var(--neon); text-decoration: none; font-weight: 700;">Live Demo ↗</a></p>
+  <p style="color:var(--muted)">hello@codeforge.dev</p>
+</footer>
+
+</body>
+</html>

@@ -260,7 +260,14 @@
       max-width: 1100px;
       transform: translateY(40px);
       transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      max-height: 85vh;
+      overflow-y: auto;
+      padding-right: 10px;
     }
+    .modal-content::-webkit-scrollbar { width: 4px; }
+    .modal-content::-webkit-scrollbar-track { background: transparent; }
+    .modal-content::-webkit-scrollbar-thumb { background: var(--gold); }
+
     .modal-overlay.active .modal-content {
       transform: translateY(0);
     }
@@ -271,10 +278,13 @@
     .modal-header .section-tag { margin-bottom: 12px; }
     .modal-header .section-title { margin: 0 auto; }
 
-    .package-options {
+    .package-options, .website-options {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
+    }
+    .website-options {
+      display: none; /* Hidden by default */
     }
     .package-option {
       background: rgba(255,255,255,0.03);
@@ -313,6 +323,81 @@
       margin-bottom: 32px;
       line-height: 1.6;
     }
+
+    /* Website Card in Modal */
+    .website-card {
+      position: relative;
+      aspect-ratio: 4/3;
+      background: var(--grey);
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .website-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 60px;
+      color: rgba(255,255,255,0.2);
+      transition: transform 0.6s ease;
+    }
+    .website-card:hover .website-bg { transform: scale(1.1); }
+    
+    .website-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(8,8,8,0.9), transparent);
+      z-index: 2;
+    }
+    .website-name { font-family: var(--font-serif); font-size: 18px; }
+    .website-tag { font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
+
+    .pay-hover-btn {
+      position: absolute;
+      inset: 0;
+      background: rgba(8,8,8,0.4);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 3;
+    }
+    .website-card:hover .pay-hover-btn { opacity: 1; }
+    .pay-btn-inner, .preview-btn-inner {
+      width: 160px;
+      padding: 12px 0;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 500;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid var(--gold);
+    }
+    .pay-btn-inner {
+      background: var(--gold);
+      color: var(--black);
+      transform: translateY(10px);
+    }
+    .preview-btn-inner {
+      background: transparent;
+      color: var(--gold);
+      transform: translateY(20px);
+    }
+    .website-card:hover .pay-btn-inner,
+    .website-card:hover .preview-btn-inner { transform: translateY(0); }
+    
+    .pay-btn-inner:hover { background: var(--gold-light); border-color: var(--gold-light); }
+    .preview-btn-inner:hover { background: rgba(201,168,76,0.1); }
+
     .select-btn {
       background: transparent;
       border: 1px solid var(--gold);
@@ -339,6 +424,7 @@
       cursor: pointer;
       transition: color 0.3s;
       line-height: 1;
+      z-index: 2100;
     }
     .close-modal:hover { color: var(--white); }
 
@@ -728,9 +814,35 @@
       display: inline-block;
       transition: all 0.3s;
     }
-    .btn-outline:hover {
-      background: rgba(201,168,76,0.1);
-      border-color: var(--gold);
+    .btn-outline-gold {
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 16px 40px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-decoration: none;
+      font-family: var(--font-body);
+      display: inline-block;
+      transition: all 0.3s;
+      background: transparent;
+      cursor: pointer;
+    }
+    .btn-outline-gold:hover {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    .nav-links a.highlight-work {
+      color: var(--gold);
+      font-weight: 500;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 2px;
+    }
+    .nav-links a.highlight-work:hover {
+      color: var(--white);
+      border-color: var(--white);
     }
 
     /* ── CONTACT ── */
@@ -894,7 +1006,7 @@
     <a href="#" class="nav-logo">Sir<span>.</span>Build</a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
-      <li><a href="javascript:void(0)" onclick="openPackageModal()">Work</a></li>
+      <li><a href="javascript:void(0)" onclick="openPackageModal()" class="highlight-work">Work</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -915,7 +1027,7 @@
     </p>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary"><span>Get a Quote</span></a>
-      <a href="javascript:void(0)" class="btn-ghost" onclick="openPackageModal()">See My Work</a>
+      <a href="javascript:void(0)" class="btn-outline-gold" onclick="openPackageModal()">See My Work</a>
     </div>
     <div class="hero-scroll">
       <div class="scroll-line"></div>
@@ -1133,11 +1245,13 @@
   <div class="modal-overlay" id="packageModal">
     <button class="close-modal" onclick="closePackageModal()">&times;</button>
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" id="modalHeader">
         <p class="section-tag">Step 1 of 2</p>
         <h2 class="section-title">Choose Your <em>Package</em></h2>
       </div>
-      <div class="package-options">
+
+      <!-- STEP 1: PACKAGES -->
+      <div class="package-options" id="packageOptions">
         <div class="package-option" onclick="selectPackage('Starter — $50')">
           <h3>Starter</h3>
           <span class="price">$50</span>
@@ -1155,6 +1269,175 @@
           <span class="price">$150+</span>
           <p>The works. Advanced GSAP animations & full SEO optimization.</p>
           <button class="select-btn">Select Premium</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: WEBSITES -->
+      <div class="website-options" id="websiteOptions">
+        <div class="website-card">
+          <div class="website-bg">CAFÉ</div>
+          <div class="website-info">
+            <div class="website-tag">Food & Hospitality</div>
+            <div class="website-name">Amazi Café</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('Amazi Café')">Pay & Select →</div>
+            <a href="https://01-restaurant.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">CLINIC</div>
+          <div class="website-info">
+            <div class="website-tag">Healthcare</div>
+            <div class="website-name">MediCare Clinic</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('MediCare Clinic')">Pay & Select →</div>
+            <a href="https://02-clinic.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">ESTATE</div>
+          <div class="website-info">
+            <div class="website-tag">Real Estate</div>
+            <div class="website-name">Prime Properties</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('Prime Properties')">Pay & Select →</div>
+            <a href="https://03-realestate.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">WEDDING</div>
+          <div class="website-info">
+            <div class="website-tag">Wedding & Events</div>
+            <div class="website-name">Eternal Moments</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('Eternal Moments')">Pay & Select →</div>
+            <a href="https://05-wedding.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">FITNESS</div>
+          <div class="website-info">
+            <div class="website-tag">Fitness</div>
+            <div class="website-name">APEX Gym</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('APEX Gym')">Pay & Select →</div>
+            <a href="https://06-gym.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">STUDIO</div>
+          <div class="website-info">
+            <div class="website-tag">Photography</div>
+            <div class="website-name">Lumière Studio</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('Lumière Studio')">Pay & Select →</div>
+            <a href="https://07-photography.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">CATER</div>
+          <div class="website-info">
+            <div class="website-tag">Food & Event</div>
+            <div class="website-name">Saveur Catering</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('Saveur Catering')">Pay & Select →</div>
+            <a href="https://14-catering.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">CODE</div>
+          <div class="website-info">
+            <div class="website-tag">Tech & Education</div>
+            <div class="website-name">CodeForge Bootcamp</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('CodeForge Bootcamp')">Pay & Select →</div>
+            <a href="https://01-bootcamp.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">VELO</div>
+          <div class="website-info">
+            <div class="website-tag">Mobile App</div>
+            <div class="website-name">Velo App</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('Velo App')">Pay & Select →</div>
+            <a href="https://02-mobileapp.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">HOTEL</div>
+          <div class="website-info">
+            <div class="website-tag">Hospitality</div>
+            <div class="website-name">Villa Serena</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('Villa Serena')">Pay & Select →</div>
+            <a href="https://landing-hotel1.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">FINANCE</div>
+          <div class="website-info">
+            <div class="website-tag">Business</div>
+            <div class="website-name">Apex Accounting</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('Apex Accounting')">Pay & Select →</div>
+            <a href="https://accounting-landing.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">TRAIN</div>
+          <div class="website-info">
+            <div class="website-tag">Fitness</div>
+            <div class="website-name">Coach Theo</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('Coach Theo')">Pay & Select →</div>
+            <a href="https://17-personaltrainer.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">TALK</div>
+          <div class="website-info">
+            <div class="website-tag">Education</div>
+            <div class="website-name">LinguaKigali</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('LinguaKigali')">Pay & Select →</div>
+            <a href="https://18-languageschool.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">TECH</div>
+          <div class="website-info">
+            <div class="website-tag">IT Support</div>
+            <div class="website-name">NetCore IT</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('NetCore IT')">Pay & Select →</div>
+            <a href="https://19-itsupport.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
+        </div>
+        <div class="website-card">
+          <div class="website-bg">EVENT</div>
+          <div class="website-info">
+            <div class="website-tag">Planning</div>
+            <div class="website-name">Vivid Events</div>
+          </div>
+          <div class="pay-hover-btn">
+            <div class="pay-btn-inner" onclick="selectWebsite('Vivid Events')">Pay & Select →</div>
+            <a href="https://20-eventorganizer.netlify.app" target="_blank" class="preview-btn-inner" style="text-decoration:none">Live Preview 👁️</a>
+          </div>
         </div>
       </div>
     </div>
@@ -1235,30 +1518,43 @@
       }
     });
 
-    function openPackageModal() {
-      packageModal.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Prevent scroll
-    }
-
-    function closePackageModal() {
-      packageModal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
     function selectPackage(packageName) {
-      // 1. Store choice for later (pre-filling form when they return)
+      // 1. Store choice
       sessionStorage.setItem('selectedPackage', packageName);
       
-      // 2. Update form if it exists on current page
+      // 2. Update form if it exists
       if (packageSelect) {
         packageSelect.value = packageName;
       }
 
-      // 3. Close modal
-      closePackageModal();
+      // 3. Transition to Step 2
+      document.getElementById('packageOptions').style.display = 'none';
+      document.getElementById('websiteOptions').style.display = 'grid';
+      document.getElementById('modalHeader').innerHTML = `
+        <p class="section-tag">Step 2 of 2</p>
+        <h2 class="section-title">Choose Your <em>Website</em></h2>
+      `;
+    }
 
-      // 4. Redirect to Portfolio Page
-      window.location.href = 'portfolio.html';
+    function selectWebsite(websiteName) {
+      // 1. Store choice
+      sessionStorage.setItem('selectedWebsite', websiteName);
+      
+      // 2. Redirect to Payment Page
+      window.location.href = 'payment.html';
+    }
+
+    function openPackageModal() {
+      // Reset modal to Step 1
+      document.getElementById('packageOptions').style.display = 'grid';
+      document.getElementById('websiteOptions').style.display = 'none';
+      document.getElementById('modalHeader').innerHTML = `
+        <p class="section-tag">Step 1 of 2</p>
+        <h2 class="section-title">Choose Your <em>Package</em></h2>
+      `;
+      
+      packageModal.classList.add('active');
+      document.body.style.overflow = 'hidden'; 
     }
 
     // Close modal on escape key

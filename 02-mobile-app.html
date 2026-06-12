@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velo App — Move Smarter, Live Freer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06040f;
+    --purple: #7c3aed;
+    --violet: #a855f7;
+    --pink: #ec4899;
+    --cyan: #22d3ee;
+    --yellow: #fbbf24;
+    --text: #f5f3ff;
+    --muted: #9ca3af;
+    --glass: rgba(255,255,255,0.05);
+    --glass-border: rgba(255,255,255,0.1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* BG BLOBS */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    opacity: 0.4;
+    z-index: 0;
+  }
+  .blob-1 { width: 500px; height: 500px; background: var(--purple); top: -150px; right: -100px; }
+  .blob-2 { width: 400px; height: 400px; background: var(--pink); bottom: 200px; left: -150px; }
+  .blob-3 { width: 300px; height: 300px; background: var(--cyan); top: 50%; right: 200px; opacity: 0.2; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px;
+    background: rgba(6,4,15,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--violet), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.03em;
+  }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color .2s; }
+  nav a:hover { color: var(--text); }
+  .nav-dl {
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    color: white !important;
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-weight: 700 !important;
+    transition: opacity .2s !important;
+  }
+  .nav-dl:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 130px 60px 80px;
+    z-index: 1;
+    gap: 80px;
+  }
+  .hero-left { flex: 1; max-width: 580px; }
+  .hero-right { flex-shrink: 0; position: relative; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(168,85,247,0.15);
+    border: 1px solid rgba(168,85,247,0.3);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    color: var(--violet);
+    margin-bottom: 32px;
+    font-weight: 600;
+    animation: fadeUp .5s ease both;
+  }
+  .pill-dot {
+    width: 7px; height: 7px;
+    background: var(--violet);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(0.8); } }
+
+  h1 {
+    font-size: clamp(3rem, 5.5vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    margin-bottom: 28px;
+    animation: fadeUp .5s ease 0.1s both;
+  }
+  .grad-text {
+    background: linear-gradient(135deg, var(--violet), var(--pink), var(--yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 44px;
+    max-width: 480px;
+    animation: fadeUp .5s ease 0.2s both;
+  }
+  .download-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+    animation: fadeUp .5s ease 0.3s both;
+  }
+  .dl-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    padding: 14px 24px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--text);
+    transition: background .2s, border-color .2s, transform .2s;
+  }
+  .dl-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); border-color: rgba(168,85,247,0.5); }
+  .dl-icon { font-size: 1.8rem; }
+  .dl-sub { font-size: 0.7rem; color: var(--muted); }
+  .dl-name { font-size: 1rem; font-weight: 700; }
+  .hero-ratings {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    animation: fadeUp .5s ease 0.4s both;
+  }
+  .avatars { display: flex; }
+  .av {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+    margin-left: -10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700;
+  }
+  .av:first-child { margin-left: 0; }
+  .rating-text strong { display: block; font-size: 0.95rem; }
+  .rating-text span { color: var(--muted); font-size: 0.82rem; }
+  .stars { color: var(--yellow); font-size: 0.85rem; }
+
+  /* PHONE MOCKUP */
+  .phone-wrap {
+    position: relative;
+    animation: float 4s ease-in-out infinite, fadeUp .5s ease 0.2s both;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+  }
+  .phone {
+    width: 240px;
+    height: 500px;
+    background: linear-gradient(160deg, #1a1030, #0d0920);
+    border-radius: 40px;
+    border: 2px solid rgba(255,255,255,0.12);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 60px rgba(124,58,237,0.3);
+  }
+  .phone-notch {
+    width: 80px; height: 22px;
+    background: #000;
+    border-radius: 0 0 20px 20px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .phone-screen {
+    padding: 16px;
+    height: calc(100% - 22px);
+  }
+  .phone-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .phone-greeting { font-size: 0.65rem; color: var(--muted); }
+  .phone-greeting strong { display: block; font-size: 0.85rem; color: var(--text); font-weight: 700; }
+  .phone-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--violet), var(--pink)); }
+  .phone-card {
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  .phone-card .label { font-size: 0.6rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .phone-card .big { font-size: 1.5rem; font-weight: 800; }
+  .phone-card .sub { font-size: 0.65rem; color: rgba(255,255,255,0.8); }
+  .phone-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .phone-stat {
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+  .phone-stat .val { font-size: 1rem; font-weight: 700; }
+  .phone-stat .lbl { font-size: 0.55rem; color: var(--muted); }
+  .phone-bar { height: 6px; background: rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; margin: 8px 0; }
+  .phone-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--violet), var(--cyan)); }
+  .floating-badge {
+    position: absolute;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 10px 14px;
+    white-space: nowrap;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .badge-left { left: -120px; top: 120px; }
+  .badge-right { right: -120px; bottom: 160px; }
+  .badge-emoji { margin-right: 6px; }
+
+  /* FEATURES */
+  .section { padding: 100px 60px; position: relative; z-index: 1; }
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--violet);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .section-sub { color: var(--muted); font-size: 1rem; margin-bottom: 60px; line-height: 1.6; max-width: 500px; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .feat-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 32px 28px;
+    transition: border-color .3s, transform .3s;
+    cursor: default;
+  }
+  .feat-card:hover { border-color: rgba(168,85,247,0.4); transform: translateY(-4px); }
+  .feat-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  .feat-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .feat-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+  /* SCREENSHOT GALLERY */
+  .screens-section {
+    padding: 80px 60px;
+    position: relative; z-index: 1;
+    overflow: hidden;
+  }
+  .screens-track {
+    display: flex;
+    gap: 20px;
+    animation: scroll-screens 20s linear infinite;
+    width: max-content;
+  }
+  @keyframes scroll-screens {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .screen-mini {
+    width: 160px; height: 280px;
+    background: linear-gradient(160deg, #1a1030, #0d0920);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: rgba(255,255,255,0.8);
+    overflow: hidden;
+    position: relative;
+  }
+  .screen-mini .fill {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: 20px 16px;
+  }
+  .sm-bar { height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; margin-bottom: 8px; }
+  .sm-circle { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--purple), var(--pink)); margin-bottom: 12px; }
+  .sm-card { background: rgba(255,255,255,0.06); border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+  .sm-line { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin: 4px 0; }
+
+  /* SOCIAL PROOF */
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .review-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 28px;
+  }
+  .review-stars { color: var(--yellow); font-size: 0.9rem; margin-bottom: 14px; }
+  .review-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.65; margin-bottom: 20px; }
+  .review-author { display: flex; align-items: center; gap: 10px; }
+  .rav { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; }
+  .review-author strong { display: block; font-size: 0.9rem; }
+  .review-author span { font-size: 0.78rem; color: var(--muted); }
+
+  /* CTA */
+  .cta-section {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 100px 60px;
+  }
+  .cta-glow {
+    position: absolute;
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 70%);
+    left: 50%; transform: translateX(-50%);
+    top: 0; pointer-events: none;
+  }
+  .cta-section h2 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 20px; letter-spacing: -0.04em; }
+  .cta-section p { color: var(--muted); font-size: 1.05rem; margin-bottom: 44px; }
+  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  footer {
+    border-top: 1px solid var(--glass-border);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    position: relative; z-index: 1;
+    background: rgba(6,4,15,0.5);
+  }
+  footer p { color: var(--muted); font-size: 0.85rem; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .hero { flex-direction: column; text-align: center; padding: 120px 24px 60px; gap: 40px; }
+    .hero-ratings { justify-content: center; }
+    .download-btns { justify-content: center; }
+    nav ul { display: none; }
+    nav, .section, .cta-section, footer { padding-left: 24px; padding-right: 24px; }
+    .floating-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<nav>
+  <div class="logo">velo.</div>
+  <ul>
+    <li><a href="#">Features</a></li>
+    <li><a href="#">Screenshots</a></li>
+    <li><a href="#">Reviews</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#" class="nav-dl">Download Free</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="pill"><span class="pill-dot"></span> Now on iOS & Android</div>
+    <h1>Move smarter.<br>Live <span class="grad-text">freer.</span></h1>
+    <p class="hero-sub">
+      Velo is the all-in-one mobility app that connects you with rides, rentals, and transit — all in one beautiful, blazing-fast interface.
+    </p>
+    <div class="download-btns">
+      <a href="#" class="dl-btn">
+        <span class="dl-icon">🍎</span>
+        <div>
+          <div class="dl-sub">Download on the</div>
+          <div class="dl-name">App Store</div>
+        </div>
+      </a>
+      <a href="#" class="dl-btn">
+        <span class="dl-icon">▶</span>
+        <div>
+          <div class="dl-sub">Get it on</div>
+          <div class="dl-name">Google Play</div>
+        </div>
+      </a>
+    </div>
+    <div class="hero-ratings">
+      <div class="avatars">
+        <div class="av" style="background:linear-gradient(135deg,#7c3aed,#ec4899)">A</div>
+        <div class="av" style="background:linear-gradient(135deg,#22d3ee,#a855f7)">J</div>
+        <div class="av" style="background:linear-gradient(135deg,#fbbf24,#ef4444)">M</div>
+        <div class="av" style="background:linear-gradient(135deg,#34d399,#22d3ee)">S</div>
+      </div>
+      <div class="rating-text">
+        <div class="stars">★★★★★</div>
+        <strong>4.9 / 5.0</strong>
+        <span>From 120,000+ reviews</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="phone-wrap">
+      <div class="floating-badge badge-left">
+        <span class="badge-emoji">📍</span> 3 min away
+      </div>
+      <div class="floating-badge badge-right">
+        <span class="badge-emoji">⚡</span> Saved $14 this week
+      </div>
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-header">
+            <div class="phone-greeting">
+              <div>Good morning,</div>
+              <strong>Sarah 👋</strong>
+            </div>
+            <div class="phone-avatar"></div>
+          </div>
+          <div class="phone-card">
+            <div class="label">Today's commute</div>
+            <div class="big">22 min</div>
+            <div class="sub">↓ 8 min faster than usual</div>
+          </div>
+          <div class="phone-stats">
+            <div class="phone-stat">
+              <div class="val" style="color:#a855f7">🚴 5.2</div>
+              <div class="lbl">km ridden</div>
+            </div>
+            <div class="phone-stat">
+              <div class="val" style="color:#22d3ee">$12.40</div>
+              <div class="lbl">saved today</div>
+            </div>
+          </div>
+          <div class="label" style="font-size:0.6rem;color:rgba(255,255,255,0.4);margin-bottom:6px">Weekly Progress</div>
+          <div class="phone-bar"><div class="phone-bar-fill" style="width:72%"></div></div>
+          <div class="phone-bar"><div class="phone-bar-fill" style="width:45%;background:linear-gradient(90deg,#ec4899,#fbbf24)"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <span class="section-tag">// what makes velo different</span>
+  <h2 class="section-title">Everything you need<br>to get around.</h2>
+  <p class="section-sub">One app, every mode of transport. No more juggling five apps for your commute.</p>
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(124,58,237,0.15)">🗺️</div>
+      <h3>Smart Route Planning</h3>
+      <p>AI-powered routing that learns your habits and always finds the fastest, cheapest way there.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(236,72,153,0.15)">💳</div>
+      <h3>Unified Payments</h3>
+      <p>One wallet, every provider. Rides, rentals, transit passes — all billed in one place.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(34,211,238,0.15)">⚡</div>
+      <h3>Real-Time Tracking</h3>
+      <p>Live vehicle tracking, arrival predictions accurate to the minute, and instant notifications.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(251,191,36,0.15)">🌿</div>
+      <h3>Carbon Footprint</h3>
+      <p>Track your environmental impact and earn rewards for choosing greener transport options.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(52,211,153,0.15)">👥</div>
+      <h3>Split & Share</h3>
+      <p>Share rides with friends, split costs automatically, and coordinate group trips with ease.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(239,68,68,0.15)">🔒</div>
+      <h3>Privacy First</h3>
+      <p>No data selling. Your location history stays yours. Full transparency, always.</p>
+    </div>
+  </div>
+</section>
+
+<section class="screens-section">
+  <span class="section-tag" style="padding-left:60px">// beautiful by design</span>
+  <h2 class="section-title" style="padding-left:60px;margin-bottom:40px">Every screen, crafted.</h2>
+  <div class="screens-track">
+    <!-- duplicate set for seamless loop -->
+    <div class="screen-mini" style="background:linear-gradient(160deg,#1a0535,#0d0920)"><div class="fill"><div class="sm-circle"></div><div class="sm-bar" style="width:80%"></div><div class="sm-bar" style="width:60%"></div><div class="sm-card"><div class="sm-line" style="width:90%"></div><div class="sm-line" style="width:60%"></div></div></div></div>
+    <div class="screen-mini" style="background:linear-gradient(160deg,#030f1a,#061220)"><div class="fill"><div class="sm-bar" style="width:50%;height:14px;background:linear-gradient(90deg,#22d3ee,#7c3aed);margin-bottom:16px"></div><div class="sm-card"></div><div class="sm-card"></div></div></div>
+    <div class="screen-mini" style="background:linear-gradient(160deg,#1a0a20,#0d0510)"><div class="fill"><div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#7c3aed);margin-bottom:14px"></div><div class="sm-bar"></div><div class="sm-bar" style="width:70%"></div><div class="sm-bar" style="width:50%;background:linear-gradient(90deg,#fbbf24,#ef4444)"></div></div></div>
+    <div class="screen-mini"><div class="fill"><div class="sm-bar" style="height:100px;border-radius:12px;background:linear-gradient(135deg,#1a1030,#0d1920);margin-bottom:12px"></div><div class="sm-bar" style="width:80%"></div><div class="sm-bar" style="width:60%"></div></div></div>
+    <div class="screen-mini" style="background:linear-gradient(160deg,#031510,#06100d)"><div class="fill"><div class="sm-bar" style="height:12px;background:linear-gradient(90deg,#34d399,#22d3ee);margin-bottom:14px"></div><div class="sm-card"></div><div class="sm-bar" style="width:70%"></div></div></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="screen-mini" style="background:linear-gradient(160deg,#1a0535,#0d0920)"><div class="fill"><div class="sm-circle"></div><div class="sm-bar" style="width:80%"></div><div class="sm-bar" style="width:60%"></div><div class="sm-card"><div class="sm-line" style="width:90%"></div><div class="sm-line" style="width:60%"></div></div></div></div>
+    <div class="screen-mini" style="background:linear-gradient(160deg,#030f1a,#061220)"><div class="fill"><div class="sm-bar" style="width:50%;height:14px;background:linear-gradient(90deg,#22d3ee,#7c3aed);margin-bottom:16px"></div><div class="sm-card"></div><div class="sm-card"></div></div></div>
+    <div class="screen-mini" style="background:linear-gradient(160deg,#1a0a20,#0d0510)"><div class="fill"><div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#7c3aed);margin-bottom:14px"></div><div class="sm-bar"></div><div class="sm-bar" style="width:70%"></div><div class="sm-bar" style="width:50%;background:linear-gradient(90deg,#fbbf24,#ef4444)"></div></div></div>
+    <div class="screen-mini"><div class="fill"><div class="sm-bar" style="height:100px;border-radius:12px;background:linear-gradient(135deg,#1a1030,#0d1920);margin-bottom:12px"></div><div class="sm-bar" style="width:80%"></div><div class="sm-bar" style="width:60%"></div></div></div>
+    <div class="screen-mini" style="background:linear-gradient(160deg,#031510,#06100d)"><div class="fill"><div class="sm-bar" style="height:12px;background:linear-gradient(90deg,#34d399,#22d3ee);margin-bottom:14px"></div><div class="sm-card"></div><div class="sm-bar" style="width:70%"></div></div></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:60px">
+  <span class="section-tag">// user love</span>
+  <h2 class="section-title">120,000+ happy users.</h2>
+  <p class="section-sub">Here's what real Velo users say about their commutes.</p>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p>"I deleted 4 other apps when I switched to Velo. Everything just works. The route suggestions alone save me 20 minutes a day."</p>
+      <div class="review-author">
+        <div class="rav" style="background:rgba(124,58,237,0.2);color:#a855f7">TC</div>
+        <div><strong>Tariq C.</strong><span>Daily commuter, NYC</span></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p>"The carbon tracker genuinely changed how I get around. I've cut my emissions by 60% in 3 months and saved money doing it."</p>
+      <div class="review-author">
+        <div class="rav" style="background:rgba(52,211,153,0.2);color:#34d399">MN</div>
+        <div><strong>Maya N.</strong><span>Sustainability advocate</span></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p>"The split-cost feature with my roommates is game-changing. We share rides everywhere now and it's completely effortless."</p>
+      <div class="review-author">
+        <div class="rav" style="background:rgba(236,72,153,0.2);color:#ec4899">RL</div>
+        <div><strong>Remi L.</strong><span>College student, Chicago</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <h2>Ready to ride<br><span class="grad-text">smarter?</span></h2>
+  <p>Free download. No subscription needed to get started.</p>
+  <div class="cta-btns">
+    <a href="#" class="dl-btn">
+      <span class="dl-icon">🍎</span>
+      <div><div class="dl-sub">Download on the</div><div class="dl-name">App Store</div></div>
+    </a>
+    <a href="#" class="dl-btn">
+      <span class="dl-icon">▶</span>
+      <div><div class="dl-sub">Get it on</div><div class="dl-name">Google Play</div></div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">velo.</div>
+  <p>© 2025 Velo Technologies Inc.</p>
+  <a href="https://02-mobileapp.netlify.app" target="_blank" style="color: var(--violet); text-decoration: none; font-size: 14px; font-weight: 700;">Live Demo ↗</a>
+  <p>hello@velo.app</p>
+</footer>
+
+</body>
+</html>
