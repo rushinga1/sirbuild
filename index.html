@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guevara — Landing Page Developer</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H5CB1BN40S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-H5CB1BN40S');
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1204,24 +1213,24 @@
       </div>
 
       <div class="reveal reveal-delay-2">
-        <div class="contact-form">
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/mjgdpdpj" method="POST">
           <div class="form-row">
             <div class="form-group">
               <label>Your Name</label>
-              <input type="text" placeholder="John Doe" />
+              <input type="text" name="name" placeholder="John Doe" required />
             </div>
             <div class="form-group">
               <label>Email or WhatsApp</label>
-              <input type="text" placeholder="john@example.com" />
+              <input type="text" name="contact" placeholder="john@example.com" required />
             </div>
           </div>
           <div class="form-group">
             <label>Your Business / Project</label>
-            <input type="text" placeholder="e.g. Kigali Fashion Store" />
+            <input type="text" name="business" placeholder="e.g. Kigali Fashion Store" required />
           </div>
           <div class="form-group">
             <label>Package</label>
-            <select id="packageSelect">
+            <select id="packageSelect" name="package" required>
               <option value="">Select a package</option>
               <option>Starter — $50</option>
               <option>Standard — $100</option>
@@ -1231,12 +1240,12 @@
           </div>
           <div class="form-group">
             <label>Tell me more (optional)</label>
-            <textarea placeholder="What does your business do? Any style ideas, colors, or references?"></textarea>
+            <textarea name="message" placeholder="What does your business do? Any style ideas, colors, or references?"></textarea>
           </div>
-          <button class="btn-primary" style="width:100%; border:none; font-size:12px; cursor:pointer; padding:18px;" onclick="handleSubmit(this)">
+          <button type="button" class="btn-primary" style="width:100%; border:none; font-size:12px; cursor:pointer; padding:18px;" onclick="handleSubmit(this)">
             <span>Send Request →</span>
           </button>
-        </div>
+        </form>
       </div>
     </div>
   </section>
@@ -1488,10 +1497,54 @@
     reveals.forEach(el => observer.observe(el));
 
     // Form submit
-    function handleSubmit(btn) {
-      btn.innerHTML = '<span>✓ Request Sent!</span>';
-      btn.style.background = '#2a6e3a';
+    async function handleSubmit(btn) {
+      const form = document.getElementById('contactForm');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const formData = new FormData(form);
+      const originalText = btn.innerHTML;
+      
+      btn.innerHTML = '<span>Sending...</span>';
       btn.style.pointerEvents = 'none';
+      btn.style.opacity = '0.7';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          btn.innerHTML = '<span>✓ Request Sent!</span>';
+          btn.style.background = '#2a6e3a';
+          btn.style.opacity = '1';
+          form.reset();
+        } else {
+          btn.innerHTML = '<span>Error! Try again.</span>';
+          btn.style.background = '#e74c3c';
+          btn.style.pointerEvents = 'auto';
+          btn.style.opacity = '1';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+          }, 3000);
+        }
+      } catch (error) {
+        btn.innerHTML = '<span>Connection Error!</span>';
+        btn.style.background = '#e74c3c';
+        btn.style.pointerEvents = 'auto';
+        btn.style.opacity = '1';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.style.background = '';
+        }, 3000);
+      }
     }
 
     // Nav scroll effect
